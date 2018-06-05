@@ -5,9 +5,17 @@ $(function () {
         colModel: [
             { label: '会员编号', name: 'userNo', index: 'USER_NO', width: 80 },
 			{ label: '会员姓名', name: 'userName', index: 'USER_NAME', width: 80 },
-			{ label: '性别', name: 'userSex', index: 'USER_SEX', width: 80 },
+			{ label: '性别', name: 'userSex', width: 80, formatter: function(value, options, row){
+                return value === 0 ?
+                    '<span>男</span>' :
+                    '<span>女</span>';
+            }},
 			{ label: '手机号码', name: 'phone', index: 'PHONE', width: 80 },
-            { label: '会员类型', name: 'userType', index: 'USER_TYPE', width: 80 },
+            { label: '会员类型', name: 'userType',width: 80, formatter: function(value, options, row){
+                return value === 1 ?
+                    '<span>VIP用户</span>' :
+                    '<span>普通用户</span>';
+            }},
 			{ label: '微信号', name: 'wxUname', index: 'WX_UNAME', width: 80 },
 			{ label: '注册时间', name: 'registTime', index: 'REGIST_TIME', width: 80 }
         ],

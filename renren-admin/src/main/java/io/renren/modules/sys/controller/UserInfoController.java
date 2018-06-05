@@ -36,7 +36,7 @@ public class UserInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("sys:userinfo:list")
+//    @RequiresPermissions("sys:userinfo:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = userInfoService.queryPage(params);
 
