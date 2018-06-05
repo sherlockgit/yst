@@ -2,17 +2,14 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/userinfo/list',
         datatype: "json",
-        colModel: [			
-			{ label: 'userId', name: 'userId', index: 'USER_ID', width: 50, key: true },
-			{ label: '用户姓名', name: 'userName', index: 'USER_NAME', width: 80 }, 			
-			{ label: '用户类型[1-VIP  2-普通用户]', name: 'userType', index: 'USER_TYPE', width: 80 }, 			
-			{ label: '性别', name: 'userSex', index: 'USER_SEX', width: 80 }, 			
-			{ label: '手机号码', name: 'phone', index: 'PHONE', width: 80 }, 			
-			{ label: '住址', name: 'address', index: 'ADDRESS', width: 80 }, 			
-			{ label: '微信名称', name: 'wxUname', index: 'WX_UNAME', width: 80 }, 			
-			{ label: '微信OPENID', name: 'wxOpenid', index: 'WX_OPENID', width: 80 }, 			
-			{ label: '微信头像', name: 'wxHeadpic', index: 'WX_HEADPIC', width: 80 }, 			
-			{ label: '说明', name: 'memo', index: 'MEMO', width: 80 }			
+        colModel: [
+            { label: '会员编号', name: 'userNo', index: 'USER_NO', width: 80 },
+			{ label: '会员姓名', name: 'userName', index: 'USER_NAME', width: 80 },
+			{ label: '性别', name: 'userSex', index: 'USER_SEX', width: 80 },
+			{ label: '手机号码', name: 'phone', index: 'PHONE', width: 80 },
+            { label: '会员类型', name: 'userType', index: 'USER_TYPE', width: 80 },
+			{ label: '微信号', name: 'wxUname', index: 'WX_UNAME', width: 80 },
+			{ label: '注册时间', name: 'registTime', index: 'REGIST_TIME', width: 80 }
         ],
 		viewrecords: true,
         height: 385,

@@ -24,7 +24,7 @@ import io.renren.common.utils.R;
  *
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2018-06-04 22:13:46
+ * @date 2018-06-05 21:47:20
  */
 @RestController
 @RequestMapping("sys/userinfo")

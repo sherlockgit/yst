@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2018-06-04 22:13:46
+ * @date 2018-06-05 21:47:20
  */
 public interface UserInfoService extends IService<UserInfoEntity> {
 

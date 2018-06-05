@@ -15,6 +15,8 @@
         <result property="wxOpenid" column="WX_OPENID"/>
         <result property="wxHeadpic" column="WX_HEADPIC"/>
         <result property="memo" column="MEMO"/>
+        <result property="userNo" column="USER_NO"/>
+        <result property="registTime" column="REGIST_TIME"/>
     </resultMap>
 
 

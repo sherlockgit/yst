@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2018-06-04 22:13:46
+ * @date 2018-06-05 21:47:20
  */
 @TableName("user_info")
 public class UserInfoEntity implements Serializable {
@@ -58,6 +58,14 @@ public class UserInfoEntity implements Serializable {
 	 * 说明
 	 */
 	private String memo;
+	/**
+	 * 会员编号
+	 */
+	private String userNo;
+	/**
+	 * 注册时间
+	 */
+	private Date registTime;
 
 	/**
 	 * 设置：唯一主键
@@ -178,5 +186,22 @@ public class UserInfoEntity implements Serializable {
 	 */
 	public String getMemo() {
 		return memo;
+	}
+
+
+	public String getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
+	}
+
+	public Date getRegistTime() {
+		return registTime;
+	}
+
+	public void setRegistTime(Date registTime) {
+		this.registTime = registTime;
 	}
 }
