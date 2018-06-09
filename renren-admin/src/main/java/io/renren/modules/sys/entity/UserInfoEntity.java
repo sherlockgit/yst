@@ -1,8 +1,17 @@
 package io.renren.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotations.KeySequence;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.renren.common.validator.group.AddGroup;
+import io.renren.common.validator.group.UpdateGroup;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,21 +23,24 @@ import java.util.Date;
  * @date 2018-06-05 21:47:20
  */
 @TableName("user_info")
+@KeySequence(clazz = String.class)
 public class UserInfoEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 唯一主键
 	 */
-	@TableId
+	@TableId(type = IdType.INPUT)
 	private String userId;
 	/**
 	 * 用户姓名
 	 */
+	@NotBlank(message="会员姓名不能为空",groups = {AddGroup.class, UpdateGroup.class})
 	private String userName;
 	/**
 	 * 用户类型[1-VIP  2-普通用户]
 	 */
+	@NotBlank(message="会员类型不能为空",groups = {AddGroup.class, UpdateGroup.class})
 	private String userType;
 	/**
 	 * 性别
@@ -37,6 +49,8 @@ public class UserInfoEntity implements Serializable {
 	/**
 	 * 手机号码
 	 */
+	@NotBlank(message="会员手机不能为空",groups = {AddGroup.class, UpdateGroup.class})
+	@Pattern(regexp = "^[1][3,4,5,7,8][0-9]{9}$",message = "请输入正确的手机号码",groups = {AddGroup.class, UpdateGroup.class})
 	private String phone;
 	/**
 	 * 住址
@@ -45,6 +59,7 @@ public class UserInfoEntity implements Serializable {
 	/**
 	 * 微信名称
 	 */
+	@NotBlank(message="微信号不能为空",groups = {AddGroup.class, UpdateGroup.class})
 	private String wxUname;
 	/**
 	 * 微信OPENID
@@ -65,6 +80,7 @@ public class UserInfoEntity implements Serializable {
 	/**
 	 * 注册时间
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date registTime;
 
 	/**

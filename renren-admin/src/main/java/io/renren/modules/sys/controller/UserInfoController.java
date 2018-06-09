@@ -1,9 +1,13 @@
 package io.renren.modules.sys.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
+import io.renren.common.utils.UUIDUtils;
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.common.validator.group.AddGroup;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +43,6 @@ public class UserInfoController {
 //    @RequiresPermissions("sys:userinfo:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = userInfoService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
@@ -59,34 +62,24 @@ public class UserInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("sys:userinfo:save")
+//    @RequiresPermissions("sys:userinfo:save")
     public R save(@RequestBody UserInfoEntity userInfo){
-        userInfoService.insert(userInfo);
+        ValidatorUtils.validateEntity(userInfo, AddGroup.class);
 
-        return R.ok();
+
+        return userInfoService.insertUserInfo(userInfo);
     }
 
     /**
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("sys:userinfo:update")
+//    @RequiresPermissions("sys:userinfo:update")
     public R update(@RequestBody UserInfoEntity userInfo){
         ValidatorUtils.validateEntity(userInfo);
-        userInfoService.updateAllColumnById(userInfo);//全部更新
-        
-        return R.ok();
+
+        return userInfoService.updateUserInfo(userInfo);
     }
 
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-    @RequiresPermissions("sys:userinfo:delete")
-    public R delete(@RequestBody String[] userIds){
-        userInfoService.deleteBatchIds(Arrays.asList(userIds));
-
-        return R.ok();
-    }
 
 }

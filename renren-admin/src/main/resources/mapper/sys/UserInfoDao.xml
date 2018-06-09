@@ -19,5 +19,21 @@
         <result property="registTime" column="REGIST_TIME"/>
     </resultMap>
 
+    <select id="getByPhone" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+        PHONE
+        FROM
+        user_info
+        WHERE PHONE = #{phone,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getByWXName" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT
+        PHONE
+        FROM
+        user_info
+        WHERE WX_UNAME = #{wxUname,jdbcType=VARCHAR}
+    </select>
+
 
 </mapper>

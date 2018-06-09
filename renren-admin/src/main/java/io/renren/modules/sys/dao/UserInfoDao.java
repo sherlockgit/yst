@@ -11,5 +11,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @date 2018-06-05 21:47:20
  */
 public interface UserInfoDao extends BaseMapper<UserInfoEntity> {
-	
+
+    String getByPhone (String phone);
+
+    String getByWXName (String wxUname);
 }

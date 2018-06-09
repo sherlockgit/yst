@@ -2,6 +2,7 @@ package io.renren.modules.sys.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import io.renren.common.utils.PageUtils;
+import io.renren.common.utils.R;
 import io.renren.modules.sys.entity.UserInfoEntity;
 
 import java.util.Map;
@@ -16,5 +17,9 @@ import java.util.Map;
 public interface UserInfoService extends IService<UserInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    R insertUserInfo (UserInfoEntity userInfoEntity);
+
+    R updateUserInfo (UserInfoEntity userInfoEntity);
 }
 

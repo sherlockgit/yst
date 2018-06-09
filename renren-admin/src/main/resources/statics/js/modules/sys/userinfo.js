@@ -3,21 +3,29 @@ $(function () {
         url: baseURL + 'sys/userinfo/list',
         datatype: "json",
         colModel: [
+            { hidden: true, name: 'userId', index: "USER_ID", width: 0, key: true },
             { label: '会员编号', name: 'userNo', index: 'USER_NO', width: 80 },
 			{ label: '会员姓名', name: 'userName', index: 'USER_NAME', width: 80 },
 			{ label: '性别', name: 'userSex', width: 80, formatter: function(value, options, row){
-                return value === 0 ?
+                return value == '0' ?
                     '<span>男</span>' :
                     '<span>女</span>';
             }},
 			{ label: '手机号码', name: 'phone', index: 'PHONE', width: 80 },
             { label: '会员类型', name: 'userType',width: 80, formatter: function(value, options, row){
-                return value === 1 ?
-                    '<span>VIP用户</span>' :
-                    '<span>普通用户</span>';
+                return value == '1' ?
+                    '<span >VIP用户</span>' :
+                    '<span >普通用户</span>';
             }},
 			{ label: '微信号', name: 'wxUname', index: 'WX_UNAME', width: 80 },
-			{ label: '注册时间', name: 'registTime', index: 'REGIST_TIME', width: 80 }
+			{ label: '注册时间', name: 'registTime', index: 'REGIST_TIME', width: 80 },
+            {
+                label: '操作', name: '', index: 'operate', width: 50, align: 'center',
+                formatter: function (cellvalue, options, rowObject) {
+                    var detail="<a  onclick='vm.detail(\""+ rowObject.userId + "\")'' href=\"#\" >详情</a>";
+                    return detail;
+                },
+            },
         ],
 		viewrecords: true,
         height: 385,
@@ -49,8 +57,17 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+        q:{
+            userName: null,
+            phone: null,
+            wxUname: null,
+            userType: null
+        },
 		showList: true,
+		showSaveOrUpdate: false,
+		showDetail: false,
 		title: null,
+		userSex: 0,
 		userInfo: {}
 	},
 	methods: {
@@ -59,19 +76,32 @@ var vm = new Vue({
 		},
 		add: function(){
 			vm.showList = false;
+            vm.showSaveOrUpdate = true,
 			vm.title = "新增";
-			vm.userInfo = {};
+			vm.userInfo = {userSex:0};
 		},
 		update: function (event) {
 			var userId = getSelectedRow();
+
 			if(userId == null){
 				return ;
 			}
 			vm.showList = false;
+            vm.showSaveOrUpdate = true,
             vm.title = "修改";
             
             vm.getInfo(userId)
 		},
+		detail: function (userId) {
+            if(userId == null){
+                return ;
+            }
+            vm.showList = false;
+            vm.showDetail = true,
+            vm.title = "详情";
+
+            vm.getInfo(userId)
+        },
 		saveOrUpdate: function (event) {
 			var url = vm.userInfo.userId == null ? "sys/userinfo/save" : "sys/userinfo/update";
 			$.ajax({
@@ -121,8 +151,16 @@ var vm = new Vue({
 		},
 		reload: function (event) {
 			vm.showList = true;
+            vm.showSaveOrUpdate = false;
+            vm.showDetail = false;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
+                postData:{
+                	'userName': vm.q.userName,
+                    'phone': vm.q.phone,
+                    'wxUname': vm.q.wxUname,
+                    'userType': vm.q.userType
+				},
                 page:page
             }).trigger("reloadGrid");
 		}
