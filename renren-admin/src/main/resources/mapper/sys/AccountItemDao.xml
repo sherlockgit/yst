@@ -15,5 +15,12 @@
         <result property="memo" column="MEMO"/>
     </resultMap>
 
+    <select id="getAccountItemByUserId" resultMap="accountItemMap" parameterType="java.lang.String">
+        SELECT
+        AMT_IN,AMT_OUT,BALANCE,TRAN_STATUS,CREATE_TIME,MEMO
+        FROM
+        account_item
+        WHERE USER_ID = #{userID,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

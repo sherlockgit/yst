@@ -1,7 +1,10 @@
 package io.renren.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotations.KeySequence;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
@@ -15,13 +18,14 @@ import java.util.Date;
  * @date 2018-06-04 21:54:43
  */
 @TableName("account_item")
+@KeySequence(clazz = String.class)
 public class AccountItemEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 唯一主键
 	 */
-	@TableId
+	@TableId(type = IdType.INPUT)
 	private String itemId;
 	/**
 	 * 会员ID
@@ -46,6 +50,7 @@ public class AccountItemEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Date createTime;
 	/**
 	 * 说明

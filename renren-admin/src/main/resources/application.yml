@@ -83,3 +83,11 @@ oss:
   accessKeySecret: yaLNWDopT70aT2YCIWv7OPczEa1gh7
   backetName: sellers
   folder: images
+mybatis:
+  mapper-locations: classpath:mapper/sys/*.xml
+  type-aliases-package: io.renren.modules.sys.entity
+#pagehelper:
+#    helperDialect: mysql
+#    reasonable: true
+#    supportMethodsArguments: true
+#    params: count=countSql

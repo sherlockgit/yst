@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'sys/destine/list',
         datatype: "json",
         colModel: [			
-			{ label: 'destineId', name: 'destineId', index: 'DESTINE_ID', width: 50, key: true },
+			{ hidden: true,label: 'destineId', name: 'destineId', index: 'DESTINE_ID', width: 50, key: true },
 			{ label: '会员ID', name: 'userId', index: 'USER_ID', width: 80 }, 			
 			{ label: '预约姓名', name: 'uname', index: 'UNAME', width: 80 }, 			
 			{ label: '手机号码', name: 'phone', index: 'PHONE', width: 80 }, 			

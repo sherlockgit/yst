@@ -17,7 +17,14 @@ $(function () {
                     return '<span>已下线</span>';
 				}
             }},
-			{ label: '创建时间', name: 'createTime', index: 'CREATE_TIME', width: 80 }			
+			{ label: '创建时间', name: 'createTime', index: 'CREATE_TIME', width: 80 },
+            {
+                label: '操作', name: '', index: 'operate', width: 50, align: 'center',
+                formatter: function (cellvalue, options, rowObject) {
+                    var detail="<a  onclick='vm.detail(\""+ rowObject.bannerId + "\")'' href=\"#\" >详情</a>";
+                    return detail;
+                },
+            },
         ],
 		viewrecords: true,
         height: 385,
@@ -50,6 +57,8 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		showList: true,
+        showSaveOrUpdate: false,
+        showDetail: false,
 		title: null,
 		banner: {}
 	},
@@ -58,7 +67,10 @@ var vm = new Vue({
 			vm.reload();
 		},
 		add: function(){
+            $('#img').removeAttr("src")
+
 			vm.showList = false;
+            vm.showSaveOrUpdate = true;
 			vm.title = "新增";
 			vm.banner = {statu: 0,sort: 1};
 		},
@@ -69,8 +81,22 @@ var vm = new Vue({
 			}
 
 			vm.showList = false;
+            vm.showSaveOrUpdate = true;
             vm.title = "修改";
             
+            vm.getInfo(bannerId)
+
+
+        },
+        detail: function (bannerId) {
+            if(bannerId == null){
+                return ;
+            }
+
+            vm.showList = false;
+            vm.showDetail = true,
+			vm.title = "详情";
+
             vm.getInfo(bannerId)
 
 
@@ -119,11 +145,15 @@ var vm = new Vue({
 		},
 		getInfo: function(bannerId){
 			$.get(baseURL + "sys/banner/info/"+bannerId, function(r){
+                $('#img').attr('src', r.banner.picture);
+                $('#imgd').attr('src', r.banner.picture);
                 vm.banner = r.banner;
             });
 		},
 		reload: function (event) {
 			vm.showList = true;
+            vm.showSaveOrUpdate = false;
+            vm.showDetail = false;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
@@ -132,25 +162,36 @@ var vm = new Vue({
 	}
 });
 
-$("#file").fileinput({
-    showUploadedThumbs: false,
-    language : 'zh',
-    uploadUrl : baseURL + "common/upload/",
-    autoReplace : true,
-    maxFileCount : 1,
-    showUpload: true,
-    showCaption: false,
-    showCancel: false,
-    layoutTemplates :{
-        // actionDelete:'', //去除上传预览的缩略图中的删除图标
-        actionUpload:'',//去除上传预览缩略图中的上传图片；
-        actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
-    },
-    initialPreview: vm.path,
-    allowedFileExtensions : [ "jpg", "png", "gif" ],
-    browseClass : "btn btn-primary", //按钮样式
-    // previewFileIcon : "<i class='glyphicon glyphicon-king'></i>"
-}).on("fileuploaded", function(e, data) {
-    var res = data.response;
-    vm.banner.picture = res.msg;
+layui.use('upload', function(){
+    var $ = layui.jquery
+        ,upload = layui.upload;
+
+    //普通图片上传
+    var uploadInst = upload.render({
+        elem: '#file'
+        ,url: baseURL + "common/upload/"
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            layer.load(2);
+            obj.preview(function(index, file, result){
+                $('#img').attr('src', result); //图片链接（base64）
+            });
+        }
+        ,done: function(res){
+            //如果上传失败
+            if(res.code > 0){
+                return layer.msg('上传失败');
+            }
+            vm.banner.picture = res.msg//上传成功
+            layer.closeAll('loading');
+        }
+        ,error: function(){
+            //演示失败状态，并实现重传
+            var demoText = $('#demoText');
+            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+            demoText.find('.demo-reload').on('click', function(){
+                uploadInst.upload();
+            });
+        }
+    });
 });

@@ -1,6 +1,8 @@
 package io.renren.modules.sys.service.impl;
 
 import io.renren.common.utils.*;
+import io.renren.modules.sys.entity.AccountEntity;
+import io.renren.modules.sys.service.AccountService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoDao, UserInfoEntity
 
     @Autowired
     UserInfoDao userInfoDao;
+
+    @Autowired
+    AccountService accountService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -60,10 +65,20 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoDao, UserInfoEntity
             return R.error("该微信号已经存在");
         }
 
-        userInfoEntity.setUserId(UUIDUtils.getUUID());
+        /*构建用户信息*/
+        String userId = UUIDUtils.getUUID();
+        userInfoEntity.setUserId(userId);
         userInfoEntity.setRegistTime(new Date());
         userInfoEntity.setUserNo(NoUtils.genOrderNo());
+
+        /*构建账户信息*/
+        AccountEntity accountEntity = new AccountEntity();
+        accountEntity.setAccountId(UUIDUtils.getUUID());
+        accountEntity.setUserId(userId);
+        accountEntity.setUpdateTime(new Date());
+
         insert(userInfoEntity);
+        accountService.insert(accountEntity);
         return R.ok();
     }
 

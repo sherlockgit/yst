@@ -1,7 +1,11 @@
 package io.renren.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotations.KeySequence;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
@@ -15,13 +19,14 @@ import java.util.Date;
  * @date 2018-06-04 21:54:43
  */
 @TableName("account")
+@KeySequence(clazz = String.class)
 public class AccountEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 唯一主键
 	 */
-	@TableId
+	@TableId(type = IdType.INPUT)
 	private String accountId;
 	/**
 	 * 会员ID
@@ -42,7 +47,36 @@ public class AccountEntity implements Serializable {
 	/**
 	 * 更新时间
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date updateTime;
+
+	/**
+	 * 用户姓名
+	 */
+	@TableField(exist=false)
+	private String userName;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	/**
+	 * 用户姓名
+	 */
+	@TableField(exist=false)
+	private String phone;
 
 	/**
 	 * 设置：唯一主键

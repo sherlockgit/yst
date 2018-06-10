@@ -8,6 +8,7 @@ import java.util.UUID;
 import io.renren.common.utils.UUIDUtils;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.common.validator.group.AddGroup;
+import io.renren.common.validator.group.UpdateGroup;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,7 @@ public class UserInfoController {
     @RequestMapping("/list")
 //    @RequiresPermissions("sys:userinfo:list")
     public R list(@RequestParam Map<String, Object> params){
+        System.out.println(params);
         PageUtils page = userInfoService.queryPage(params);
         return R.ok().put("page", page);
     }
@@ -76,7 +78,7 @@ public class UserInfoController {
     @RequestMapping("/update")
 //    @RequiresPermissions("sys:userinfo:update")
     public R update(@RequestBody UserInfoEntity userInfo){
-        ValidatorUtils.validateEntity(userInfo);
+        ValidatorUtils.validateEntity(userInfo, UpdateGroup.class);
 
         return userInfoService.updateUserInfo(userInfo);
     }

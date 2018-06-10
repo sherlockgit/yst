@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.common.validator.group.UpdateGroup;
+import io.renren.modules.sys.vo.AccountVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,11 +38,11 @@ public class AccountController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("sys:account:list")
+//    @RequiresPermissions("sys:account:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = accountService.queryPage(params);
-
-        return R.ok().put("page", page);
+//        PageUtils page = accountService.queryPage(params);
+        System.out.println(params);
+        return accountService.getAccountInfoList(params);
     }
 
 
@@ -48,11 +50,10 @@ public class AccountController {
      * 信息
      */
     @RequestMapping("/info/{accountId}")
-    @RequiresPermissions("sys:account:info")
+//    @RequiresPermissions("sys:account:info")
     public R info(@PathVariable("accountId") String accountId){
-        AccountEntity account = accountService.selectById(accountId);
 
-        return R.ok().put("account", account);
+        return accountService.getAccountDetail(accountId);
     }
 
     /**
@@ -70,12 +71,11 @@ public class AccountController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("sys:account:update")
-    public R update(@RequestBody AccountEntity account){
-        ValidatorUtils.validateEntity(account);
-        accountService.updateAllColumnById(account);//全部更新
-        
-        return R.ok();
+//    @RequiresPermissions("sys:account:update")
+    public R update(@RequestBody AccountVO accountVO){
+        ValidatorUtils.validateEntity(accountVO, UpdateGroup.class);
+
+        return accountService.addAccount(accountVO);
     }
 
     /**

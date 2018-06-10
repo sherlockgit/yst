@@ -2,6 +2,7 @@ package io.renren.modules.sys.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import io.renren.common.utils.PageUtils;
+import io.renren.common.utils.R;
 import io.renren.modules.sys.entity.AccountItemEntity;
 
 import java.util.Map;
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface AccountItemService extends IService<AccountItemEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    PageUtils getAccountItemByUserIdPage (Map<String, Object> params);
 }
 

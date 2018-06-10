@@ -3,6 +3,8 @@ package io.renren.modules.sys.dao;
 import io.renren.modules.sys.entity.AccountItemEntity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * 会员账户明细表
  * 
@@ -11,5 +13,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @date 2018-06-04 21:54:43
  */
 public interface AccountItemDao extends BaseMapper<AccountItemEntity> {
-	
+    List<AccountItemEntity> getAccountItemByUserId (String userId);
 }

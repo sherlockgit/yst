@@ -36,9 +36,9 @@ public class AccountItemController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("sys:accountitem:list")
+//    @RequiresPermissions("sys:accountitem:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = accountItemService.queryPage(params);
+        PageUtils page = accountItemService.getAccountItemByUserIdPage(params);
 
         return R.ok().put("page", page);
     }

@@ -74,9 +74,8 @@ public class BannerController {
 //    @RequiresPermissions("sys:banner:update")
     public R update(@RequestBody BannerEntity banner){
         ValidatorUtils.validateEntity(banner, UpdateGroup.class);
-        bannerService.updateAllColumnById(banner);//全部更新
+        return bannerService.updateBannner(banner);//全部更新
         
-        return R.ok();
     }
 
     /**
