@@ -8,15 +8,18 @@
 <div id="rrapp" v-cloak>
     <div v-show="showList">
         <div class="grid-btn">
-			<#if shiro.hasPermission("sys:accountitem:save")>
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			</#if>
-			<#if shiro.hasPermission("sys:accountitem:update")>
-            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			</#if>
-			<#if shiro.hasPermission("sys:accountitem:delete")>
-            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			</#if>
+            <label class="form-inline">会员姓名：<input type="text" v-model="q.userName" @keyup.enter="query" class="form-control" placeholder="会员姓名"></label>
+            <label class="form-inline">手机号码：<input type="text" v-model="q.phone" @keyup.enter="query" class="form-control" placeholder="手机号码"></label>
+            <label class="form-inline">交易状态：
+                <div class="form-group">
+                    <select  class="form-control" v-model="q.tranStatus" @keyup.enter="query">
+                        <option></option>
+                        <option value="0" >失败</option>
+                        <option value="1" >成功</option>
+                    </select>
+                </div>
+            </label>
+            <a class="btn btn-default" @click="query">查询</a>
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>

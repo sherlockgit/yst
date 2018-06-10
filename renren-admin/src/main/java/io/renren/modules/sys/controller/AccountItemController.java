@@ -43,6 +43,16 @@ public class AccountItemController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 所有用户明细列表
+     * @param params
+     * @return
+     */
+    @RequestMapping("/listAll")
+//  @RequiresPermissions("sys:accountitem:list")
+    public R listAll(@RequestParam Map<String, Object> params) {
+        return accountItemService.getAccountItemAll(params);
+    }
 
     /**
      * 信息

@@ -128,3 +128,11 @@ var vm = new Vue({
 		}
 	}
 });
+
+$('#datetimeStart').datetimepicker({
+    format: 'hh:ii'
+});
+
+$('#datetimeEnd').datetimepicker({
+    format: 'hh:ii'
+});

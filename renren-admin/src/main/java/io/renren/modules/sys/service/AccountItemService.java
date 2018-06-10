@@ -19,5 +19,12 @@ public interface AccountItemService extends IService<AccountItemEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     PageUtils getAccountItemByUserIdPage (Map<String, Object> params);
+
+    /**
+     * 获取明细列表
+     * @param params
+     * @return
+     */
+    R getAccountItemAll (Map<String, Object> params);
 }
 

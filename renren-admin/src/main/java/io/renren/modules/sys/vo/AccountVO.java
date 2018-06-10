@@ -182,7 +182,6 @@ public class AccountVO {
 
     /**
      * 手机号码
-
      */
     private String phone;
 }

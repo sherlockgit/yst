@@ -40,8 +40,6 @@ public class AccountController {
     @RequestMapping("/list")
 //    @RequiresPermissions("sys:account:list")
     public R list(@RequestParam Map<String, Object> params){
-//        PageUtils page = accountService.queryPage(params);
-        System.out.println(params);
         return accountService.getAccountInfoList(params);
     }
 

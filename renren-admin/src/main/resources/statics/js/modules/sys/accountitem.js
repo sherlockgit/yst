@@ -1,16 +1,20 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'sys/accountitem/list',
+        url: baseURL + 'sys/accountitem/listAll',
         datatype: "json",
-        colModel: [			
-			{ label: 'itemId', name: 'itemId', index: 'ITEM_ID', width: 50, key: true },
-			{ label: '会员ID', name: 'userId', index: 'USER_ID', width: 80 }, 			
-			{ label: '充值', name: 'amtIn', index: 'AMT_IN', width: 80 }, 			
-			{ label: '消费', name: 'amtOut', index: 'AMT_OUT', width: 80 }, 			
-			{ label: '账户余额', name: 'balance', index: 'BALANCE', width: 80 }, 			
-			{ label: '交易状态[0-失败  1-成功]', name: 'tranStatus', index: 'TRAN_STATUS', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'CREATE_TIME', width: 80 }, 			
-			{ label: '说明', name: 'memo', index: 'MEMO', width: 80 }			
+        colModel: [
+            { label: '用户姓名', name: 'userName', index: 'USER_NAME', width: 80 },
+            { label: '手机号码', name: 'phone', index: 'PHONE', width: 80 },
+			{ label: '收入', name: 'amtIn', index: 'AMT_IN', width: 80 },
+			{ label: '支出', name: 'amtOut', index: 'AMT_OUT', width: 80 },
+			{ label: '余额', name: 'balance', index: 'BALANCE', width: 80 },
+            { label: '交易状态', name: 'tranStatus',  width: 80,formatter: function(value, options, row){
+                return value == '0' ?
+                    '<span>失败</span>' :
+                    '<span>成功</span>';
+            } },
+            { label: '交易时间', name: 'createTime', index: 'CREATE_TIME', width: 80 },
+            { label: '说明', name: 'meno', index: 'MEMO', width: 80 }
         ],
 		viewrecords: true,
         height: 385,
@@ -42,6 +46,11 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+        q:{
+            userName: null,
+            phone: null,
+            tranStatus: null
+        },
 		showList: true,
 		title: null,
 		accountItem: {}
@@ -115,9 +124,15 @@ var vm = new Vue({
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
+                postData:{
+                    'phone': vm.q.phone,
+                    'userName': vm.q.userName,
+                    'tranStatus': vm.q.tranStatus
+                },
                 page:page
             }).trigger("reloadGrid");
 		}
 	}
 });
+

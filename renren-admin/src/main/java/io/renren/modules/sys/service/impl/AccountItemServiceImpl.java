@@ -2,7 +2,7 @@ package io.renren.modules.sys.service.impl;
 
 
 import io.renren.common.utils.R;
-import org.apache.commons.lang.StringUtils;
+import io.renren.modules.sys.vo.AccountItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
@@ -59,6 +59,24 @@ public class AccountItemServiceImpl extends ServiceImpl<AccountItemDao, AccountI
         );
 
         return new PageUtils(page);
+    }
+
+    /**
+     * 获取明细列表
+     * @param params
+     * @return
+     */
+    @Override
+    public R getAccountItemAll(Map<String, Object> params) {
+
+        Integer limit = Integer.parseInt((String)params.get("limit"));
+        Integer page = Integer.parseInt((String)params.get("page"));
+        Integer pagesSelect = (page-1)*limit;
+        params.put("limit",limit);
+        params.put("page",pagesSelect);
+        AccountItemVO accountItemVO = accountItemDao.getAccountItemAll(params).get(0);
+        PageUtils pageUtils = new PageUtils(accountItemDao.getAccountItemAll(params),accountItemDao.selectCountItemAll(params),limit,page);
+        return R.ok().put("page",pageUtils);
     }
 
 }
