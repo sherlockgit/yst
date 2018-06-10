@@ -11,5 +11,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @date 2018-06-04 21:54:43
  */
 public interface BannerDao extends BaseMapper<BannerEntity> {
+
+    Integer selectBySort (Integer sort);
 	
 }

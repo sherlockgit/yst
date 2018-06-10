@@ -1,8 +1,15 @@
 package io.renren.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotations.KeySequence;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.renren.common.validator.group.AddGroup;
+import io.renren.common.validator.group.UpdateGroup;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,17 +21,19 @@ import java.util.Date;
  * @date 2018-06-04 21:54:43
  */
 @TableName("banner")
+@KeySequence(clazz = String.class)
 public class BannerEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 唯一主键
 	 */
-	@TableId
+	@TableId(type = IdType.INPUT)
 	private String bannerId;
 	/**
 	 * 标题
 	 */
+	@NotBlank(message="轮播标题不能为空",groups = {AddGroup.class, UpdateGroup.class})
 	private String title;
 	/**
 	 * 跳转地址
@@ -41,10 +50,12 @@ public class BannerEntity implements Serializable {
 	/**
 	 * 轮播图片
 	 */
+	@NotBlank(message="轮播图片不能为空",groups = {AddGroup.class, UpdateGroup.class})
 	private String picture;
 	/**
 	 * 创建时间
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date createTime;
 
 	/**

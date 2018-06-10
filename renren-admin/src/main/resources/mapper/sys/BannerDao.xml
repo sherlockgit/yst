@@ -14,5 +14,12 @@
         <result property="createTime" column="CREATE_TIME"/>
     </resultMap>
 
+    <select id="selectBySort" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+        sort
+        FROM
+        banner
+        WHERE sort = #{sort,jdbcType=INTEGER}
+    </select>
 
 </mapper>

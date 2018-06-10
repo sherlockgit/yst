@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.common.validator.group.AddGroup;
+import io.renren.common.validator.group.UpdateGroup;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,20 +61,19 @@ public class BannerController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("sys:banner:save")
+//    @RequiresPermissions("sys:banner:save")
     public R save(@RequestBody BannerEntity banner){
-        bannerService.insert(banner);
-
-        return R.ok();
+        ValidatorUtils.validateEntity(banner, AddGroup.class);
+        return bannerService.insertBanner(banner);
     }
 
     /**
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("sys:banner:update")
+//    @RequiresPermissions("sys:banner:update")
     public R update(@RequestBody BannerEntity banner){
-        ValidatorUtils.validateEntity(banner);
+        ValidatorUtils.validateEntity(banner, UpdateGroup.class);
         bannerService.updateAllColumnById(banner);//全部更新
         
         return R.ok();

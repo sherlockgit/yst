@@ -3,12 +3,20 @@ $(function () {
         url: baseURL + 'sys/banner/list',
         datatype: "json",
         colModel: [			
-			{ label: 'bannerId', name: 'bannerId', index: 'BANNER_ID', width: 50, key: true },
-			{ label: '标题', name: 'title', index: 'TITLE', width: 80 }, 			
-			{ label: '跳转地址', name: 'href', index: 'HREF', width: 80 }, 			
+			{ label: 'bannerId', hidden: true, name: 'bannerId', index: 'BANNER_ID', width: 50, key: true },
+			{ label: '标题', name: 'title', index: 'TITLE', width: 80 },
+            { label: '图片地址', name: 'picture', index: 'PICTURE', width: 80 },
+            { label: '跳转地址', name: 'href', index: 'HREF', width: 80 },
 			{ label: '排序', name: 'sort', index: 'SORT', width: 80 }, 			
-			{ label: '轮播状态[0-新建 1-已上线 2-已下线]', name: 'statu', index: 'STATU', width: 80 }, 			
-			{ label: '轮播图片', name: 'picture', index: 'PICTURE', width: 80 }, 			
+			{ label: '轮播状态', name: 'statu', width: 80, formatter: function(value, options, row){
+				if (value == '0') {
+                	return '<span>新建</span>';
+				} else if (value == '1') {
+                    return '<span>已上线</span>';
+				} else {
+                    return '<span>已下线</span>';
+				}
+            }},
 			{ label: '创建时间', name: 'createTime', index: 'CREATE_TIME', width: 80 }			
         ],
 		viewrecords: true,
@@ -52,18 +60,21 @@ var vm = new Vue({
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
-			vm.banner = {};
+			vm.banner = {statu: 0,sort: 1};
 		},
 		update: function (event) {
 			var bannerId = getSelectedRow();
 			if(bannerId == null){
 				return ;
 			}
+
 			vm.showList = false;
             vm.title = "修改";
             
             vm.getInfo(bannerId)
-		},
+
+
+        },
 		saveOrUpdate: function (event) {
 			var url = vm.banner.bannerId == null ? "sys/banner/save" : "sys/banner/update";
 			$.ajax({
@@ -119,4 +130,27 @@ var vm = new Vue({
             }).trigger("reloadGrid");
 		}
 	}
+});
+
+$("#file").fileinput({
+    showUploadedThumbs: false,
+    language : 'zh',
+    uploadUrl : baseURL + "common/upload/",
+    autoReplace : true,
+    maxFileCount : 1,
+    showUpload: true,
+    showCaption: false,
+    showCancel: false,
+    layoutTemplates :{
+        // actionDelete:'', //去除上传预览的缩略图中的删除图标
+        actionUpload:'',//去除上传预览缩略图中的上传图片；
+        actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
+    },
+    initialPreview: vm.path,
+    allowedFileExtensions : [ "jpg", "png", "gif" ],
+    browseClass : "btn btn-primary", //按钮样式
+    // previewFileIcon : "<i class='glyphicon glyphicon-king'></i>"
+}).on("fileuploaded", function(e, data) {
+    var res = data.response;
+    vm.banner.picture = res.msg;
 });

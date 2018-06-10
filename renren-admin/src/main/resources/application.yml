@@ -77,3 +77,9 @@ logging:
   level.io.renren: debug
   path: logs/
   file: admin.log
+oss:
+  endPoint: oss-cn-shenzhen.aliyuncs.com
+  accessKeyId: LTAI4ZZnKNNlkvVz
+  accessKeySecret: yaLNWDopT70aT2YCIWv7OPczEa1gh7
+  backetName: sellers
+  folder: images
