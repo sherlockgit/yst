@@ -1,10 +1,12 @@
 package io.renren.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotations.KeySequence;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.renren.common.validator.group.AddGroup;
 import io.renren.common.validator.group.UpdateGroup;
 
@@ -13,6 +15,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -24,6 +27,7 @@ import java.util.Date;
  */
 @TableName("user_info")
 @KeySequence(clazz = String.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserInfoEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -82,6 +86,17 @@ public class UserInfoEntity implements Serializable {
 	 */
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date registTime;
+
+	@TableField(exist=false)
+	private BigDecimal balance;
+
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	public void setBalance(BigDecimal balance) {
+		this.balance = balance;
+	}
 
 	/**
 	 * 设置：唯一主键

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.renren.common.validator.group.AddGroup;
 import io.renren.common.validator.group.UpdateGroup;
 import org.hibernate.validator.constraints.Range;
@@ -22,6 +23,7 @@ import java.util.Date;
  */
 @TableName("banner")
 @KeySequence(clazz = String.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BannerEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

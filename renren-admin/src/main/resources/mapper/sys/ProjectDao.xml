@@ -22,5 +22,18 @@
         <result property="memo" column="MEMO"/>
     </resultMap>
 
+    <select id="getProjectByType" resultMap="projectMap" parameterType="map">
+        SELECT
+        PRO_NAME,PRO_AMT,PRO_ID,PRO_CONTENT,COVER_PIC,BEGIN_TIME,END_TIME,PRO_LONG
+        FROM
+        project
+        <where>
+            <if test="proType != null and proType != ''">
+                AND PRO_TYPE = #{proType,jdbcType=VARCHAR}
+            </if>
+            AND PRO_STATUS = 1
+        </where>
+        ORDER BY CREATE_TIME DESC limit #{page,jdbcType=INTEGER},10
+    </select>
 
 </mapper>

@@ -12,7 +12,9 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface UserInfoDao extends BaseMapper<UserInfoEntity> {
 
-    String getByPhone (String phone);
+    String getByPhone(String phone);
 
-    String getByWXName (String wxUname);
+    String getByWXName(String wxUname);
+
+    UserInfoEntity getOpenId(String wxOpenid);
 }

@@ -22,4 +22,13 @@
         WHERE sort = #{sort,jdbcType=INTEGER}
     </select>
 
+    <select id="selectBannerList" resultMap="bannerMap">
+        SELECT
+        HREF,PICTURE
+        FROM
+        banner
+        WHERE STATU = 1
+        ORDER BY sort ASC
+    </select>
+
 </mapper>

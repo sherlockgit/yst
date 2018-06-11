@@ -18,8 +18,10 @@ public interface UserInfoService extends IService<UserInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
-    R insertUserInfo (UserInfoEntity userInfoEntity);
+    R insertUserInfo(UserInfoEntity userInfoEntity);
 
-    R updateUserInfo (UserInfoEntity userInfoEntity);
+    R updateUserInfo(UserInfoEntity userInfoEntity);
+
+    R appLogin(UserInfoEntity userInfoEntity);
 }
 

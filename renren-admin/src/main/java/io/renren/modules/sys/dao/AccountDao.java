@@ -16,9 +16,11 @@ import java.util.Map;
  */
 public interface AccountDao extends BaseMapper<AccountEntity> {
 
-    List<AccountVO> getAccountInfoList (Map<String, Object> params);
+    List<AccountVO> getAccountInfoList(Map<String, Object> params);
 
     Integer selectCount(Map<String, Object> params);
 
-    AccountVO getAccountDetail (String accountId);
+    AccountVO getAccountDetail(String accountId);
+
+    AccountVO getBalanceByUserId(String userId);
 }

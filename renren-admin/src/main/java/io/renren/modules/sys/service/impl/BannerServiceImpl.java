@@ -72,4 +72,13 @@ public class BannerServiceImpl extends ServiceImpl<BannerDao, BannerEntity> impl
         return R.ok();
     }
 
+    /**
+     * banner列表
+     * @return
+     */
+    @Override
+    public R selectBannerList() {
+        return R.ok().put("data",bannerDao.selectBannerList());
+    }
+
 }

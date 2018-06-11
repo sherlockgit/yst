@@ -2,6 +2,7 @@ package io.renren.modules.sys.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import io.renren.common.utils.PageUtils;
+import io.renren.common.utils.R;
 import io.renren.modules.sys.entity.ProjectEntity;
 
 import java.util.Map;
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface ProjectService extends IService<ProjectEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    R getProjectByType(Map<String, Object> params);
 }
 

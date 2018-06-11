@@ -19,6 +19,14 @@
         <result property="registTime" column="REGIST_TIME"/>
     </resultMap>
 
+    <select id="getOpenId" resultMap="userInfoMap">
+        SELECT
+        WX_OPENID,USER_ID,USER_NAME,PHONE,WX_UNAME,WX_OPENID,WX_HEADPIC,USER_NO,REGIST_TIME,USER_TYPE
+        FROM
+        user_info
+        WHERE WX_OPENID = #{wxOpenid,jdbcType=VARCHAR}
+    </select>
+
     <select id="getByPhone" parameterType="java.lang.String" resultType="java.lang.String">
         SELECT
         PHONE
@@ -34,6 +42,7 @@
         user_info
         WHERE WX_UNAME = #{wxUname,jdbcType=VARCHAR}
     </select>
+
 
 
 </mapper>

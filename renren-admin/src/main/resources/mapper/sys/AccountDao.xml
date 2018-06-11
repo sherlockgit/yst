@@ -90,4 +90,12 @@
         ON a.USER_ID = u.USER_ID
         WHERE a.ACCOUNT_ID = #{accountId,jdbcType=VARCHAR}
     </select>
+
+    <select id="getBalanceByUserId" parameterType="java.lang.String" resultMap="accountMap">
+        SELECT
+        BALANCE
+        FROM
+        account
+        WHERE USER_ID = #{userId,jdbcType=VARCHAR}
+    </select>
 </mapper>
