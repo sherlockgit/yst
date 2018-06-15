@@ -10,6 +10,9 @@ package io.renren.modules.sys.controller;
 		import org.springframework.web.bind.annotation.*;
 		import org.springframework.web.multipart.MultipartFile;
 
+		import java.util.HashMap;
+		import java.util.Map;
+
 /**
  * Created by yhy
  * 2017-10-22 14:27
@@ -41,6 +44,17 @@ public class UploadFileController {
 
 		System.out.println("文件上传结束");
 		return R.ok(path);
+	}
+
+	@PostMapping("/uploadEdit")
+	public R uploadEdit(@RequestParam("file") MultipartFile file){
+		System.out.println("文件上传开始");
+		OSSClient ossClient= OSSUtil.getOSSClient();
+		String path = OSSUtil.uploadObject2OSS(ossClient,file, OSSConfig.folder);
+		Map<String,String> map = new HashMap<>();
+		map.put("src",path);
+		System.out.println("文件上传结束");
+		return R.ok().put("data",map);
 	}
 
 	public boolean fileType(String fileName) {

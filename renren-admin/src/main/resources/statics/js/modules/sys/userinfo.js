@@ -7,9 +7,13 @@ $(function () {
             { label: '会员编号', name: 'userNo', index: 'USER_NO', width: 80 },
 			{ label: '会员姓名', name: 'userName', index: 'USER_NAME', width: 80 },
 			{ label: '性别', name: 'userSex', width: 80, formatter: function(value, options, row){
-                return value == '0' ?
-                    '<span>男</span>' :
-                    '<span>女</span>';
+                if (value == '0') {
+                    return '<span>男</span>';
+                } else if (value == '1') {
+                    return '<span>女</span>';
+                } else {
+                    return '<span>--</span>';
+                }
             }},
 			{ label: '手机号码', name: 'phone', index: 'PHONE', width: 80 },
             { label: '会员类型', name: 'userType',width: 80, formatter: function(value, options, row){

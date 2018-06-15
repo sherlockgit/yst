@@ -4,8 +4,6 @@
     <title>项目信息表</title>
 		<#include "/header.html">
             <link rel="stylesheet" href="${request.contextPath}/statics/plugins/layui2_3_0/css/layui.css" media="all">
-            <link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap-datetimepicker.min.css" media="all">
-            <script src="${request.contextPath}/statics/libs/bootstrap-datetimepicker.min.js"></script>
             <script src="${request.contextPath}/statics/plugins/layui2_3_0/layui.js"></script>
             <script src="${request.contextPath}/statics/plugins/layer/layer.js"></script>
 </head>
@@ -13,9 +11,9 @@
 <div id="rrapp" v-cloak>
     <div v-show="showList">
         <div class="grid-btn">
-			<!--<#if shiro.hasPermission("sys:project:save")>-->
+			<#if shiro.hasPermission("sys:project:save")>
             <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			<!--</#if>-->
+			</#if>
 			<#if shiro.hasPermission("sys:project:update")>
             <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
 			</#if>
@@ -27,7 +25,7 @@
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="showList" class="panel panel-default">
+    <div v-show="!showList" class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
             <div class="form-group">
@@ -61,16 +59,28 @@
                     <input type="text" class="form-control" v-model="project.proLong" placeholder="服务时长/分钟"/>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-sm-2 control-label">服务时段</div>
-                <div class="col-sm-2 ">
-                    <input type="text" class="form-control" id="datetimeStart" v-model="project.beginTime" placeholder="开始时间"/>
+            <div class="form-group  ">
+                <div class="col-sm-2 control-label ">服务开始时间</div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="datetimeStart" v-model="project.datetimeStart" placeholder="时"/>
                 </div>
                 <div class="col-sm-1 control-label">
-                <span>——</span>
+                    <span>:</span>
                 </div>
                 <div class="col-sm-2 ">
-                    <input type="text" class="form-control" id="datetimeEnd" v-model="project.endTime" placeholder="结束时间"/>
+                    <input type="text" class="form-control" id="dateMinStart" v-model="project.dateMinStart" placeholder="分"/>
+                </div>
+            </div>
+            <div class="form-group  ">
+                <div class="col-sm-2 control-label ">服务结束时间</div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="datetimeEnd" v-model="project.datetimeEnd" placeholder="时"/>
+                </div>
+                <div class="col-sm-1 control-label">
+                    <span>:</span>
+                </div>
+                <div class="col-sm-2 ">
+                    <input type="text" class="form-control" id="dateMinEnd" v-model="project.dateMinEnd" placeholder="分"/>
                 </div>
             </div>
             <div class="form-group">
@@ -104,15 +114,18 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-2 control-label">介绍轮播图</div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="project.cyclePic" placeholder="介绍轮播图"/>
+                <div class="col-sm-2 control-label">项目轮播图</div>
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="test2">上传</button>
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                        <div class="layui-upload-list" id="demo2"></div>
+                    </blockquote>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label">项目说明</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="project.memo" placeholder="项目说明"/>
+                    <textarea class="layui-textarea" id="LAY_demo1" v-model="project.memo" style="display: none"></textarea>
                 </div>
             </div>
             <div class="form-group">

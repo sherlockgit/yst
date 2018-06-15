@@ -41,12 +41,13 @@ $(function () {
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
         }
     });
+    $("#tableShow").hide();
 });
 
-$(function (userId) {
+$(function () {
     $("#jqGridCount").jqGrid({
         url: baseURL + 'sys/accountitem/list',
         datatype: "json",
@@ -87,6 +88,7 @@ $(function (userId) {
             $("#jqGridCount").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
         }
     });
+    $("#tableShow").show();
 });
 
 var vm = new Vue({
@@ -102,6 +104,7 @@ var vm = new Vue({
 		showList: true,
         showCountList: false,
 		showDetail: false,
+        tableShow: true,
 		title: null,
 		account: {}
 	},
@@ -114,6 +117,7 @@ var vm = new Vue({
             vm.showList = false;
 			vm.showCountList = true;
             vm.showDetail = false;
+            vm.tableShow = true;
             vm.q.userId = userId;
             var page = $("#jqGridCount").jqGrid('getGridParam','page');
             var postData = {
@@ -130,6 +134,7 @@ var vm = new Vue({
 			vm.showList = false;
             vm.showCountList = false;
             vm.showDetail = true;
+            vm.tableShow = false;
 			vm.title = "新增";
 			vm.account = {};
 		},
@@ -211,6 +216,7 @@ var vm = new Vue({
             vm.showList = false;
             vm.showCountList = true;
             vm.showDetail = false;
+            vm.tableShow = false;
             var page = $("#jqGridCount").jqGrid('getGridParam','page');
             $("#jqGridCount").jqGrid('setGridParam',{
                 postData:{

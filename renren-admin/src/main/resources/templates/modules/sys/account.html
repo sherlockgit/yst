@@ -22,25 +22,6 @@
         <div id="jqGridPager"></div>
     </div>
 
-
-        <div class="grid-btn" v-show="showCountList">
-            <div class="form-inline">
-                <label class="form-inline">交易状态：
-                    <div class="form-group">
-                        <select  class="form-control" v-model="q.tranStatus" @keyup.enter="query">
-                            <option></option>
-                            <option value="0" >失败</option>
-                            <option value="1" >成功</option>
-                        </select>
-                    </div>
-                </label>
-                <a class="btn btn-default" @click="queryCount">查询</a>
-            </div>
-        </div>
-        <table v-show="showCountList" id="jqGridCount"></table>
-        <div v-show="showCountList" id="jqGridCountPager"></div>
-
-
     <div v-show="showDetail"  class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
@@ -107,6 +88,25 @@
             </div>
         </form>
     </div>
+
+    <div class="grid-btn"  v-show="showCountList">
+        <div class="form-inline">
+            <label class="form-inline">交易状态：
+                <div class="form-group">
+                    <select  class="form-control" v-model="q.tranStatus" @keyup.enter="query">
+                        <option></option>
+                        <option value="0" >失败</option>
+                        <option value="1" >成功</option>
+                    </select>
+                </div>
+            </label>
+            <a class="btn btn-default" @click="queryCount">查询</a>
+        </div>
+        <table  id="jqGridCount"></table>
+        <div  id="jqGridCountPager"></div>
+    </div>
+
+
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/account.js?_${.now?long}"></script>

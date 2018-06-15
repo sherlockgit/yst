@@ -46,6 +46,9 @@ $(function () {
     });
 });
 
+var picture = new Map();
+var indexPicture;
+
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
@@ -126,13 +129,97 @@ var vm = new Vue({
                 page:page
             }).trigger("reloadGrid");
 		}
+
 	}
 });
+layui.use('upload', function(){
+    var $ = layui.jquery
+        ,upload = layui.upload;
 
-$('#datetimeStart').datetimepicker({
-    format: 'hh:ii'
+    //普通图片上传
+    var uploadInst = upload.render({
+        elem: '#file'
+        ,url: baseURL + "common/upload/"
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            layer.load(2);
+            obj.preview(function(index, file, result){
+                $('#img').attr('src', result); //图片链接（base64）
+            });
+        }
+        ,done: function(res){
+            //如果上传失败
+            if(res.code > 0){
+                return layer.msg('上传失败');
+            }
+            vm.project.cyclePic = res.msg//上传成功
+            layer.closeAll('loading');
+        }
+        ,error: function(){
+            //演示失败状态，并实现重传
+            var demoText = $('#demoText');
+            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+            demoText.find('.demo-reload').on('click', function(){
+                uploadInst.upload();
+            });
+        }
+    });
+
+
+
+    //多图片上传
+    upload.render({
+        elem: '#test2'
+        ,url: baseURL + "common/upload/"
+        ,multiple: true
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            layer.load(2);
+            obj.preview(function(index, file, result){
+                var files = obj.pushFile();
+                $('#demo2').append('<div class="remove_'+index+'"><img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" width="100px" height="100px"></div>')
+				picture.set(index,result);
+                indexPicture=index;
+                $('.remove_'+index).bind('click',function(){
+                    delete files[index]
+                    $(this).remove();
+                    picture.delete(index)
+                })
+            });
+        }
+        ,done: function(res){
+            //上传完毕
+            //如果上传失败
+            if(res.code > 0){
+                return layer.msg('上传失败');
+            }
+            picture.set(indexPicture,res.msg);
+            console.log(picture);
+            layer.closeAll('loading');
+        }
+    });
 });
 
-$('#datetimeEnd').datetimepicker({
-    format: 'hh:ii'
+layui.use('layedit', function(){
+    var layedit = layui.layedit
+        ,$ = layui.jquery;
+
+
+    layedit.set({
+        uploadImage: {
+            url: baseURL + "common/uploadEdit/" //接口url
+            ,type: 'post' //默认post
+        }
+    });
+    //构建一个默认的编辑器
+    var index = layedit.build('LAY_demo1',{
+        height: 520 ,//设置编辑器高度
+    });
+
+    $('.site-demo-layedit').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+
 });
