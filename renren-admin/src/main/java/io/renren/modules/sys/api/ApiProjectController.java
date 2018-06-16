@@ -1,6 +1,7 @@
 package io.renren.modules.sys.api;
 
 import io.renren.common.utils.R;
+import io.renren.common.validator.Assert;
 import io.renren.modules.sys.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,12 @@ public class ApiProjectController {
     @Autowired
     ProjectService projectService;
 
+    /**
+     * 项目列表
+     * @param proType
+     * @param page
+     * @return
+     */
     @GetMapping("/getProjectByType")
     public R getProjectByType (@RequestParam(value = "proType",required = false,defaultValue = "")String proType,
                                @RequestParam(value = "page",required = false,defaultValue = "1")Integer page) {
@@ -31,6 +38,17 @@ public class ApiProjectController {
         map.put("page",page);
 
         return projectService.getProjectByType(map);
+    }
+
+    /**
+     * 项目详情
+     * @param proId
+     * @return
+     */
+    @GetMapping("/getProjectDetail")
+    public R getProjectDetail (@RequestParam(value = "proId",defaultValue = "")String proId) {
+        Assert.isBlank(proId,"项目ID不能为空");
+        return projectService.getProjectByDetail(proId);
     }
 
 }

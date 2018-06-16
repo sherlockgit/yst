@@ -43,7 +43,6 @@ public class UserInfoController {
     @RequestMapping("/list")
 //    @RequiresPermissions("sys:userinfo:list")
     public R list(@RequestParam Map<String, Object> params){
-        System.out.println(params);
         PageUtils page = userInfoService.queryPage(params);
         return R.ok().put("page", page);
     }

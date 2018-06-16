@@ -3,9 +3,10 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.jdbc.Driver
         druid:
-            url: jdbc:mysql://39.108.115.173:3306/ystdb?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+            url: jdbc:mysql://localhost:3306/ystdb?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
             username: root
-            password: admin@123456
+#            password: admin@123456
+            password: root
             initial-size: 10
             max-active: 100
             min-idle: 10

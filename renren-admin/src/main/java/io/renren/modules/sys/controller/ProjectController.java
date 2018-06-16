@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.common.validator.group.AddGroup;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,9 +49,23 @@ public class ProjectController {
      * 信息
      */
     @RequestMapping("/info/{proId}")
-    @RequiresPermissions("sys:project:info")
+//    @RequiresPermissions("sys:project:info")
     public R info(@PathVariable("proId") String proId){
         ProjectEntity project = projectService.selectById(proId);
+        Float startTime = project.getBeginTime();
+        Float endTime = project.getEndTime();
+        Integer StartTimeInt = startTime.intValue();
+        Float f = (startTime-StartTimeInt)*100;
+        Integer StartTimeMinInt = f.intValue();
+            project.setDateMinStart(StartTimeMinInt.toString());
+            project.setDatetimeStart(StartTimeInt.toString());
+
+        Integer EndTimeInt = endTime.intValue();
+        Float fe = (endTime-EndTimeInt)*100;
+        Integer EndTimeMinInt = fe.intValue();
+            project.setDateMinEnd(EndTimeMinInt.toString());
+            project.setDatetimeEnd(EndTimeInt.toString());
+
 
         return R.ok().put("project", project);
     }
@@ -59,11 +74,13 @@ public class ProjectController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("sys:project:save")
+//    @RequiresPermissions("sys:project:save")
     public R save(@RequestBody ProjectEntity project){
-        projectService.insert(project);
+        ValidatorUtils.validateEntity(project, AddGroup.class);
 
-        return R.ok();
+        return projectService.insertProject(project);
+
+
     }
 
     /**

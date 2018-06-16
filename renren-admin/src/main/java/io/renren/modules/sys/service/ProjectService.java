@@ -19,5 +19,9 @@ public interface ProjectService extends IService<ProjectEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     R getProjectByType(Map<String, Object> params);
+
+    R insertProject(ProjectEntity projectEntity);
+
+    R getProjectByDetail(String proId);
 }
 

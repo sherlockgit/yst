@@ -3,21 +3,38 @@ $(function () {
         url: baseURL + 'sys/project/list',
         datatype: "json",
         colModel: [			
-			{ label: 'proId', name: 'proId', index: 'PRO_ID', width: 50, key: true },
-			{ label: '项目名称', name: 'proName', index: 'PRO_NAME', width: 80 }, 			
-			{ label: '项目推荐语', name: 'proBrief', index: 'PRO_BRIEF', width: 80 }, 			
-			{ label: '项目状态[0-新建 1-已上线 2-已下线]', name: 'proStatus', index: 'PRO_STATUS', width: 80 }, 			
-			{ label: '项目类型[0-足疗 1-保健 2-纤体 3-养生]', name: 'proType', index: 'PRO_TYPE', width: 80 }, 			
-			{ label: '项目定价', name: 'proAmt', index: 'PRO_AMT', width: 80 }, 			
-			{ label: '服务时长/分钟', name: 'proLong', index: 'PRO_LONG', width: 80 }, 			
-			{ label: '项目介绍', name: 'proContent', index: 'PRO_CONTENT', width: 80 }, 			
-			{ label: '每天人数限制', name: 'maxPeople', index: 'MAX_PEOPLE', width: 80 }, 			
-			{ label: '封面图', name: 'coverPic', index: 'COVER_PIC', width: 80 }, 			
-			{ label: '介绍轮播图', name: 'cyclePic', index: 'CYCLE_PIC', width: 80 }, 			
-			{ label: '受理预约开始时间', name: 'beginTime', index: 'BEGIN_TIME', width: 80 }, 			
-			{ label: '受理预约结束时间', name: 'endTime', index: 'END_TIME', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'CREATE_TIME', width: 80 }, 			
-			{ label: '项目说明', name: 'memo', index: 'MEMO', width: 80 }			
+			{ hidden: true,label: 'proId', name: 'proId', index: 'PRO_ID', width: 50, key: true },
+            { label: '项目类型[0-足疗 1-保健 2-纤体 3-养生]', name: 'proType',  width: 80 ,formatter: function(value, options, row){
+                if (value == '0') {
+                    return '<span>足疗</span>';
+                } else if (value == '1') {
+                    return '<span>保健</span>';
+                }else if (value == '2') {
+                    return '<span>纤体</span>';
+                } else {
+                    return '<span>养生</span>';
+                }
+            }},
+			{ label: '项目名称', name: 'proName', index: 'PRO_NAME', width: 80 },
+            { label: '项目金额', name: 'proAmt', index: 'PRO_AMT', width: 80 },
+            { label: '服务时长/分钟', name: 'proLong', index: 'PRO_LONG', width: 80 },
+            { label: '项目状态[0-新建 1-已上线 2-已下线]', name: 'proStatus', width: 80,formatter: function(value, options, row){
+                if (value == '0') {
+                    return '<span>新建</span>';
+                } else if (value == '1') {
+                    return '<span>已上线</span>';
+                }else if (value == '2') {
+                    return '<span>已下线</span>';
+                }
+            } },
+			{ label: '创建时间', name: 'createTime', index: 'CREATE_TIME', width: 80 },
+            {
+                label: '操作', name: '', index: 'operate', width: 50, align: 'center',
+                formatter: function (cellvalue, options, rowObject) {
+                    var detail="<a  onclick='vm.detail(\""+ rowObject.proId + "\")'' href=\"#\" >详情</a>";
+                    return detail;
+                },
+            },
         ],
 		viewrecords: true,
         height: 385,
@@ -48,13 +65,19 @@ $(function () {
 
 var picture = new Map();
 var indexPicture;
-
+var cyclePic = "";
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+        q:{
+            proName: null,
+            proLong: null,
+            proStatus: null,
+            proType: null
+        },
 		showList: true,
 		title: null,
-		project: {}
+		project: {proStatus: 0}
 	},
 	methods: {
 		query: function () {
@@ -77,6 +100,14 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function (event) {
 			var url = vm.project.proId == null ? "sys/project/save" : "sys/project/update";
+            picture.forEach(function (value, key, map) {
+                cyclePic=cyclePic+value+",";
+                console.log(cyclePic)
+            });
+            vm.project.cyclePic=cyclePic;
+            console.log(vm.project.cyclePic);
+
+            console.log(vm.project.proCentent)
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
@@ -88,6 +119,8 @@ var vm = new Vue({
 							vm.reload();
 						});
 					}else{
+                        vm.project.cyclePic="";
+                        cyclePic="";
 						alert(r.msg);
 					}
 				}
@@ -118,14 +151,29 @@ var vm = new Vue({
 			});
 		},
 		getInfo: function(proId){
+		    var strs = new Array();
 			$.get(baseURL + "sys/project/info/"+proId, function(r){
+                $('#img').attr('src', r.project.coverPic);
+                var str = r.project.cyclePic
+                strs = str.split(",");
+                for(var i = 0;i<strs.length;i++){
+                    $('#demo2').append('<div class="remove_'+i+'"><img src="'+ strs[i] +'" alt="'+ file.name +'" class="layui-upload-img" width="100px" height="100px"></div>')
+                    picture.set(i,strs[i]);
+                    indexPicture=i;
+                }
                 vm.project = r.project;
             });
 		},
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
+                postData:{
+                    'proName': vm.q.proName,
+                    'proLong': vm.q.proLong,
+                    'proStatus': vm.q.proStatus,
+                    'proType': vm.q.proType
+                },
                 page:page
             }).trigger("reloadGrid");
 		}
@@ -152,7 +200,7 @@ layui.use('upload', function(){
             if(res.code > 0){
                 return layer.msg('上传失败');
             }
-            vm.project.cyclePic = res.msg//上传成功
+            vm.project.coverPic = res.msg//上传成功
             layer.closeAll('loading');
         }
         ,error: function(){
@@ -211,11 +259,41 @@ layui.use('layedit', function(){
             ,type: 'post' //默认post
         }
     });
+
+
     //构建一个默认的编辑器
     var index = layedit.build('LAY_demo1',{
         height: 520 ,//设置编辑器高度
     });
+    var active = {
+        content: function () {
+            vm.project.proContent = layedit.getContent(index)
+            var url = vm.project.proId == null ? "sys/project/save" : "sys/project/update";
+            picture.forEach(function (value, key, map) {
+                cyclePic=cyclePic+value+",";
+            });
+            vm.project.cyclePic=cyclePic;
+            console.log(vm.project.proContent);
+            $.ajax({
+                type: "POST",
+                url: baseURL + url,
+                contentType: "application/json",
+                data: JSON.stringify(vm.project),
+                success: function(r){
+                    if(r.code === 0){
+                        alert('操作成功', function(index){
+                            vm.reload();
+                        });
+                    }else{
+                        vm.project.cyclePic="";
+                        cyclePic="";
+                        alert(r.msg);
+                    }
+                }
+            });
 
+        }
+    }
     $('.site-demo-layedit').on('click', function(){
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';

@@ -24,7 +24,7 @@
 
     <select id="getProjectByType" resultMap="projectMap" parameterType="map">
         SELECT
-        PRO_NAME,PRO_AMT,PRO_ID,PRO_CONTENT,COVER_PIC,BEGIN_TIME,END_TIME,PRO_LONG
+        PRO_NAME,PRO_AMT,PRO_ID,PRO_CONTENT,COVER_PIC,BEGIN_TIME,END_TIME,PRO_LONG,CYCLE_PIC
         FROM
         project
         <where>
@@ -36,4 +36,11 @@
         ORDER BY CREATE_TIME DESC limit #{page,jdbcType=INTEGER},10
     </select>
 
+    <select id="getProjectByDetail" resultMap="projectMap" parameterType="map">
+        SELECT
+        CYCLE_PIC,PRO_CONTENT,PRO_AMT
+        FROM
+        project
+        WHERE PRO_ID = #{proId,jdbcType=VARCHAR}
+    </select>
 </mapper>
