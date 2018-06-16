@@ -5,6 +5,7 @@ import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.common.validator.group.AddGroup;
+import io.renren.common.validator.group.UpdateGroup;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -89,8 +90,8 @@ public class ProjectController {
     @RequestMapping("/update")
     @RequiresPermissions("sys:project:update")
     public R update(@RequestBody ProjectEntity project){
-        ValidatorUtils.validateEntity(project);
-        projectService.updateAllColumnById(project);//全部更新
+        ValidatorUtils.validateEntity(project,UpdateGroup.class);
+        projectService.updateAllColumnById(project);
         
         return R.ok();
     }
@@ -106,4 +107,12 @@ public class ProjectController {
         return R.ok();
     }
 
+    /**
+     * 获取项目名称列表
+     * @return
+     */
+    @RequestMapping("/getProjectNameList")
+    public R getProjectNameList(){
+        return projectService.getProjectNameList();
+    }
 }

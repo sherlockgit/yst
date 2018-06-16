@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.common.validator.group.AddGroup;
+import io.renren.common.validator.group.UpdateGroup;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,11 +61,11 @@ public class DestineController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("sys:destine:save")
+//    @RequiresPermissions("sys:destine:save")
     public R save(@RequestBody DestineEntity destine){
-        destineService.insert(destine);
+        ValidatorUtils.validateEntity(destine, AddGroup.class);
+        return destineService.insertDestince(destine);
 
-        return R.ok();
     }
 
     /**
@@ -72,7 +74,7 @@ public class DestineController {
     @RequestMapping("/update")
     @RequiresPermissions("sys:destine:update")
     public R update(@RequestBody DestineEntity destine){
-        ValidatorUtils.validateEntity(destine);
+        ValidatorUtils.validateEntity(destine, UpdateGroup.class);
         destineService.updateAllColumnById(destine);//全部更新
         
         return R.ok();

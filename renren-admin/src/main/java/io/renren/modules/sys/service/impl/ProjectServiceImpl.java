@@ -109,4 +109,13 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectDao, ProjectEntity> i
         return R.ok().put("data",projectDao.getProjectByDetail(proId));
     }
 
+    /**
+     * 获取项目名称列表
+     * @return
+     */
+    @Override
+    public R getProjectNameList() {
+        return R.ok().put("data",projectDao.getProjectNameList());
+    }
+
 }

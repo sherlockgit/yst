@@ -20,4 +20,6 @@ public interface ProjectDao extends BaseMapper<ProjectEntity> {
 
     ProjectEntity getProjectByDetail(String proId);
 
+    List<String> getProjectNameList ();
+
 }

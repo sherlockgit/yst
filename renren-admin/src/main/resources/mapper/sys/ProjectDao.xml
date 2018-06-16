@@ -24,7 +24,7 @@
 
     <select id="getProjectByType" resultMap="projectMap" parameterType="map">
         SELECT
-        PRO_NAME,PRO_AMT,PRO_ID,PRO_CONTENT,COVER_PIC,BEGIN_TIME,END_TIME,PRO_LONG,CYCLE_PIC
+        PRO_NAME,PRO_AMT,PRO_ID,PRO_BRIEF,COVER_PIC,BEGIN_TIME,END_TIME,PRO_LONG,CYCLE_PIC
         FROM
         project
         <where>
@@ -42,5 +42,13 @@
         FROM
         project
         WHERE PRO_ID = #{proId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getProjectNameList" resultType="java.lang.String" >
+        SELECT
+        PRO_NAME
+        FROM
+        project
+        WHERE PRO_STATUS = 1
     </select>
 </mapper>

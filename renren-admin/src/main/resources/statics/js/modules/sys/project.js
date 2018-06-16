@@ -66,6 +66,7 @@ $(function () {
 var picture = new Map();
 var indexPicture;
 var cyclePic = "";
+var strs = new Array();
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
@@ -76,6 +77,8 @@ var vm = new Vue({
             proType: null
         },
 		showList: true,
+        showEdit: false,
+        showDetail: false,
 		title: null,
 		project: {proStatus: 0}
 	},
@@ -85,15 +88,30 @@ var vm = new Vue({
 		},
 		add: function(){
 			vm.showList = false;
+            vm.showEdit = true;
+            vm.showDetail =false;
 			vm.title = "新增";
 			vm.project = {};
 		},
+        detail: function (proId) {
+            if(proId == null){
+                return ;
+            }
+            vm.showList = false;
+            vm.showEdit = false;
+            vm.showDetail =true;
+            vm.title = "详情";
+
+            vm.getInfoDetail(proId)
+        },
 		update: function (event) {
 			var proId = getSelectedRow();
 			if(proId == null){
 				return ;
 			}
 			vm.showList = false;
+            vm.showEdit = true;
+            vm.showDetail =false;
             vm.title = "修改";
             
             vm.getInfo(proId)
@@ -151,21 +169,43 @@ var vm = new Vue({
 			});
 		},
 		getInfo: function(proId){
-		    var strs = new Array();
 			$.get(baseURL + "sys/project/info/"+proId, function(r){
                 $('#img').attr('src', r.project.coverPic);
-                var str = r.project.cyclePic
-                strs = str.split(",");
-                for(var i = 0;i<strs.length;i++){
-                    $('#demo2').append('<div class="remove_'+i+'"><img src="'+ strs[i] +'" alt="'+ file.name +'" class="layui-upload-img" width="100px" height="100px"></div>')
-                    picture.set(i,strs[i]);
-                    indexPicture=i;
+                if(strs.length==0){
+                    var str = r.project.cyclePic
+                    strs = str.split(",");
+                    for(var i = 0;i<strs.length;i++){
+                        $('#demo2').append('<div class="remove_'+i+'"><img src="'+ strs[i] +'" alt="'+ file.name +'" class="layui-upload-img" width="100px" height="100px"></div>')
+                        picture.set("remove_"+i,strs[i]);
+                        $('.remove_'+i).bind('click',function(){
+                            picture.delete($(this).attr("class"));
+                            $(this).remove();
+                        })
+
+                    }
                 }
+                $("#LAY_demo1").text(r.project.proContent);
                 vm.project = r.project;
             });
 		},
+        getInfoDetail: function(proId){
+            $.get(baseURL + "sys/project/info/"+proId, function(r){
+                $('#imgd').attr('src', r.project.coverPic);
+                if(strs.length==0){
+                    var str = r.project.cyclePic
+                    strs = str.split(",");
+                    for(var i = 0;i<strs.length;i++){
+                        $('#demo2d').append('<div class="remove_'+i+'"><img src="'+ strs[i] +'" alt="'+ file.name +'" class="layui-upload-img" width="100px" height="100px"></div>')
+                    }
+                }
+                $("#LAY_demo1d").text(r.project.proContent);
+                vm.project = r.project;
+            });
+        },
 		reload: function (event) {
 			vm.showList = true;
+            vm.showEdit = false;
+            vm.showDetail =false;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{
                 postData:{
@@ -265,15 +305,24 @@ layui.use('layedit', function(){
     var index = layedit.build('LAY_demo1',{
         height: 520 ,//设置编辑器高度
     });
+
+    var index = layedit.build('LAY_demo1d',{
+        height: 520 ,//设置编辑器高度
+    });
     var active = {
         content: function () {
             vm.project.proContent = layedit.getContent(index)
             var url = vm.project.proId == null ? "sys/project/save" : "sys/project/update";
-            picture.forEach(function (value, key, map) {
-                cyclePic=cyclePic+value+",";
-            });
-            vm.project.cyclePic=cyclePic;
-            console.log(vm.project.proContent);
+
+                picture.forEach(function (value, key, map) {
+                    cyclePic=cyclePic+value+",";
+                });
+                cyclePic = cyclePic.substring(0,cyclePic.length-1);
+                vm.project.cyclePic=cyclePic;
+
+
+            console.log(picture)
+            console.log(cyclePic);
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
