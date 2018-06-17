@@ -20,4 +20,6 @@ public interface AccountItemDao extends BaseMapper<AccountItemEntity> {
     List<AccountItemVO> getAccountItemAll (Map<String, Object> params);
 
     Integer selectCountItemAll(Map<String, Object> params);
+
+    List<AccountItemEntity> getAccountByMonth(Map<String, Object> params);
 }

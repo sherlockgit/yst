@@ -28,6 +28,20 @@
         <result property="phone" column="PHONE"/>
     </resultMap>
 
+    <select id="getAccountByMonth" parameterType="map" resultMap="accountItemMap">
+        SELECT
+        AMT_IN,AMT_OUT,MEMO,CREATE_TIME
+        FROM
+        account_item
+        WHERE USER_ID = #{userId,jdbcType=VARCHAR}
+        AND
+        CREATE_TIME &gt; #{timeStart,jdbcType=TIMESTAMP}
+        AND
+        CREATE_TIME &lt; #{timeEnd,jdbcType=TIMESTAMP}
+        AND
+        TRAN_STATUS =1
+    </select>
+
     <select id="getAccountItemByUserId" resultMap="accountItemMap" parameterType="java.lang.String">
         SELECT
         AMT_IN,AMT_OUT,BALANCE,TRAN_STATUS,CREATE_TIME,MEMO
@@ -83,4 +97,6 @@
         </where>
         ORDER BY a.CREATE_TIME DESC
     </select>
+
+
 </mapper>

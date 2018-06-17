@@ -5,6 +5,10 @@ import io.renren.common.utils.R;
 import io.renren.modules.sys.vo.AccountItemVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -77,6 +81,27 @@ public class AccountItemServiceImpl extends ServiceImpl<AccountItemDao, AccountI
         AccountItemVO accountItemVO = accountItemDao.getAccountItemAll(params).get(0);
         PageUtils pageUtils = new PageUtils(accountItemDao.getAccountItemAll(params),accountItemDao.selectCountItemAll(params),limit,page);
         return R.ok().put("page",pageUtils);
+    }
+
+    /**
+     * 获取账户明细
+     * @param params
+     * @return
+     */
+    @Override
+    public R getAccountByMonth(Map<String, Object> params) {
+        List<AccountItemEntity> list = accountItemDao.getAccountByMonth(params);
+        BigDecimal inAll = new BigDecimal(0);
+        BigDecimal outAll = new BigDecimal(0);
+        for(AccountItemEntity o:list){
+            inAll=inAll.add(o.getAmtIn());
+            outAll=outAll.add(o.getAmtOut());
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("account",list);
+        map.put("inAll",inAll);
+        map.put("outAll",outAll);
+        return R.ok().put("data",map);
     }
 
 }

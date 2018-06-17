@@ -102,6 +102,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectDao, ProjectEntity> i
         return R.ok().put("data",list);
     }
 
+    @Override
+    public R getDestineByUser(Map<String,Object> map) {
+        return R.ok().put("data",projectDao.getDestineByUser(map));
+    }
+
     private List<ProjectEntity> reloadTime(List<ProjectEntity> list){
         list.forEach(project->{
             Float startTime = project.getBeginTime();

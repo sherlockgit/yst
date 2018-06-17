@@ -46,7 +46,7 @@
 
     <select id="getProjectNameList" resultType="java.lang.String" >
         SELECT
-        PRO_NAME
+        PRO_NAME,PRO_BRIEF,COVER_PIC
         FROM
         project
         WHERE PRO_STATUS = 1
@@ -60,4 +60,19 @@
         WHERE PRO_STATUS = 1
     </select>
 
+    <select id="getDestineByUser" resultMap="projectMap" parameterType="map">
+        SELECT
+        p.PRO_NAME,p.PRO_AMT,p.PRO_BRIEF,p.COVER_PIC
+        FROM
+        destine d
+        LEFT JOIN
+        project p
+        ON d.PRO_ID=p.PRO_ID
+        <where>
+            <if test="destineStatus != null and destineStatus != ''">
+                AND d.DISTINE_STATUS=#{destineStatus,jdbcType=VARCHAR}
+            </if>
+            AND d.USER_ID=#{userId,jdbcType=VARCHAR}
+        </where>
+    </select>
 </mapper>

@@ -26,5 +26,7 @@ public interface AccountItemService extends IService<AccountItemEntity> {
      * @return
      */
     R getAccountItemAll (Map<String, Object> params);
+
+    R getAccountByMonth (Map<String, Object> params);
 }
 

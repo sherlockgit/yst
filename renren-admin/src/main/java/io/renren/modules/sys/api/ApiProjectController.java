@@ -58,5 +58,18 @@ public class ApiProjectController {
         return projectService.getProjectByNameList();
     }
 
-
+    /**
+     * 获取用户预约信息
+     * @param userId
+     * @return
+     */
+    @GetMapping("/getDestineByUser")
+    public R getDestineByUser(@RequestParam(value = "userId",defaultValue = "")String userId,
+                              @RequestParam(value = "destineStatus",defaultValue = "")String destineStatus){
+        Assert.isBlank(userId,"用户ID不能为空");
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId",userId);
+        map.put("destineStatus",destineStatus);
+        return projectService.getDestineByUser(map);
+    }
 }

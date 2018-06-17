@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ import java.util.Date;
  */
 @TableName("account_item")
 @KeySequence(clazz = String.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AccountItemEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

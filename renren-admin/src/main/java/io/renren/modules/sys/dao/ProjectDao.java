@@ -23,4 +23,6 @@ public interface ProjectDao extends BaseMapper<ProjectEntity> {
     List<String> getProjectNameList ();
 
     List<ProjectEntity> getProjectByNameList ();
+
+    List<ProjectEntity> getDestineByUser(Map<String,Object> map);
 }
