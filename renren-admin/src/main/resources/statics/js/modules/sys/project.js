@@ -306,7 +306,7 @@ layui.use('layedit', function(){
         height: 520 ,//设置编辑器高度
     });
 
-    var index = layedit.build('LAY_demo1d',{
+    var indexd = layedit.build('LAY_demo1d',{
         height: 520 ,//设置编辑器高度
     });
     var active = {
@@ -320,9 +320,7 @@ layui.use('layedit', function(){
                 cyclePic = cyclePic.substring(0,cyclePic.length-1);
                 vm.project.cyclePic=cyclePic;
 
-
-            console.log(picture)
-            console.log(cyclePic);
+            console.log(vm.project.proContent)
             $.ajax({
                 type: "POST",
                 url: baseURL + url,

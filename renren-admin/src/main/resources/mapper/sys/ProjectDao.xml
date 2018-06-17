@@ -51,4 +51,13 @@
         project
         WHERE PRO_STATUS = 1
     </select>
+
+    <select id="getProjectByNameList" resultMap="projectMap" >
+        SELECT
+        PRO_ID,PRO_NAME,BEGIN_TIME,END_TIME,PRO_TYPE,PRO_AMT
+        FROM
+        project
+        WHERE PRO_STATUS = 1
+    </select>
+
 </mapper>

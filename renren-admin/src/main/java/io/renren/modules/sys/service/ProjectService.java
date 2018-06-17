@@ -25,5 +25,7 @@ public interface ProjectService extends IService<ProjectEntity> {
     R getProjectByDetail(String proId);
 
     R getProjectNameList();
+
+    R getProjectByNameList();
 }
 

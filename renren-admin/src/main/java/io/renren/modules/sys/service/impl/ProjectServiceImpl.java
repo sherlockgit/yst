@@ -54,30 +54,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectDao, ProjectEntity> i
         Integer pagesSelect = (page-1)*10;
         params.put("page",pagesSelect);
         List<ProjectEntity> list = projectDao.getProjectByType(params);
-        list.forEach(project->{
-            Float startTime = project.getBeginTime();
-            Float endTime = project.getEndTime();
-            Integer StartTimeInt = startTime.intValue();
-            Float f = (startTime-StartTimeInt)*100;
-            Integer StartTimeMinInt = f.intValue();
-            if (StartTimeMinInt == 0) {
-                project.setDatetimeStart(StartTimeInt.toString()+":"+StartTimeMinInt.toString()+0);
-            }else {
-                project.setDatetimeStart(StartTimeInt.toString()+":"+StartTimeMinInt.toString());
-            }
-
-
-            Integer EndTimeInt = endTime.intValue();
-            Float fe = (endTime-EndTimeInt)*100;
-            Integer EndTimeMinInt = fe.intValue();
-            if (EndTimeMinInt == 0) {
-                project.setDatetimeEnd(EndTimeInt.toString()+":"+EndTimeMinInt.toString()+0);
-            }else {
-                project.setDatetimeEnd(EndTimeInt.toString()+":"+EndTimeMinInt.toString());
-            }
-            project.setBeginTime(null);
-            project.setEndTime(null);
-        });
+        list = reloadTime(list);
         PageUtils pageUtils = new PageUtils(list,0,0,page);
         return R.ok().put("data", pageUtils);
     }
@@ -116,6 +93,41 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectDao, ProjectEntity> i
     @Override
     public R getProjectNameList() {
         return R.ok().put("data",projectDao.getProjectNameList());
+
+    }
+
+    public R getProjectByNameList(){
+        List<ProjectEntity> list = projectDao.getProjectByNameList();
+        list = reloadTime(list);
+        return R.ok().put("data",list);
+    }
+
+    private List<ProjectEntity> reloadTime(List<ProjectEntity> list){
+        list.forEach(project->{
+            Float startTime = project.getBeginTime();
+            Float endTime = project.getEndTime();
+            Integer StartTimeInt = startTime.intValue();
+            Float f = (startTime-StartTimeInt)*100;
+            Integer StartTimeMinInt = f.intValue();
+            if (StartTimeMinInt == 0) {
+                project.setDatetimeStart(StartTimeInt.toString()+":"+StartTimeMinInt.toString()+0);
+            }else {
+                project.setDatetimeStart(StartTimeInt.toString()+":"+StartTimeMinInt.toString());
+            }
+
+
+            Integer EndTimeInt = endTime.intValue();
+            Float fe = (endTime-EndTimeInt)*100;
+            Integer EndTimeMinInt = fe.intValue();
+            if (EndTimeMinInt == 0) {
+                project.setDatetimeEnd(EndTimeInt.toString()+":"+EndTimeMinInt.toString()+0);
+            }else {
+                project.setDatetimeEnd(EndTimeInt.toString()+":"+EndTimeMinInt.toString());
+            }
+            project.setBeginTime(null);
+            project.setEndTime(null);
+        });
+        return list;
     }
 
 }

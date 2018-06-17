@@ -2,12 +2,10 @@ package io.renren.modules.sys.api;
 
 import io.renren.common.utils.R;
 import io.renren.common.validator.Assert;
+import io.renren.modules.sys.entity.ProjectEntity;
 import io.renren.modules.sys.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,5 +48,15 @@ public class ApiProjectController {
         Assert.isBlank(proId,"项目ID不能为空");
         return projectService.getProjectByDetail(proId);
     }
+
+    /**
+     * 获取项目名称列表
+     * @return
+     */
+    @RequestMapping("/getProjectByNameList")
+    public R getProjectByNameList(){
+        return projectService.getProjectByNameList();
+    }
+
 
 }
