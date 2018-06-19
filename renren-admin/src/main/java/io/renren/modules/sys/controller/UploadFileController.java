@@ -41,7 +41,7 @@ public class UploadFileController {
 
 		OSSClient ossClient= OSSUtil.getOSSClient();
 		String path = OSSUtil.uploadObject2OSS(ossClient,file, OSSConfig.folder);
-
+		System.out.println(path);
 		System.out.println("文件上传结束");
 		return R.ok(path);
 	}

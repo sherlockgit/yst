@@ -33,7 +33,7 @@ public class LoginController {
         Assert.isNull(wxUname,"微信昵称不能为空");
         Assert.isNull(wxOpenid,"微信OPENID不能为空");
         Assert.isNull(wxHeadpic,"微信头像不能为空");
-
+        System.out.println("微信名："+ map.get("wxUname").toString());
         UserInfoEntity userInfoEntity = new UserInfoEntity();
         userInfoEntity.setWxUname(wxUname);
         userInfoEntity.setWxOpenid(wxOpenid);

@@ -78,7 +78,6 @@ public class AccountItemServiceImpl extends ServiceImpl<AccountItemDao, AccountI
         Integer pagesSelect = (page-1)*limit;
         params.put("limit",limit);
         params.put("page",pagesSelect);
-        AccountItemVO accountItemVO = accountItemDao.getAccountItemAll(params).get(0);
         PageUtils pageUtils = new PageUtils(accountItemDao.getAccountItemAll(params),accountItemDao.selectCountItemAll(params),limit,page);
         return R.ok().put("page",pageUtils);
     }

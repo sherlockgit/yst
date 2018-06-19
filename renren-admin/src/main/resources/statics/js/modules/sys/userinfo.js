@@ -5,7 +5,11 @@ $(function () {
         colModel: [
             { hidden: true, name: 'userId', index: "USER_ID", width: 0, key: true },
             { label: '会员编号', name: 'userNo', index: 'USER_NO', width: 80 },
-			{ label: '会员姓名', name: 'userName', index: 'USER_NAME', width: 80 },
+			{ label: '会员姓名', name: 'userName', index: 'USER_NAME', width: 80 ,formatter: function(value, options, row){
+                return value == null ?
+                    '<span>--</span>' :
+                    value;
+            }},
 			{ label: '性别', name: 'userSex', width: 80, formatter: function(value, options, row){
                 if (value == '0') {
                     return '<span>男</span>';
@@ -15,7 +19,11 @@ $(function () {
                     return '<span>--</span>';
                 }
             }},
-			{ label: '手机号码', name: 'phone', index: 'PHONE', width: 80 },
+			{ label: '手机号码', name: 'phone', index: 'PHONE', width: 80 ,formatter: function(value, options, row){
+                return value == null ?
+                    '<span>--</span>' :
+                    value;
+            }},
             { label: '会员类型', name: 'userType',width: 80, formatter: function(value, options, row){
                 return value == '1' ?
                     '<span >VIP用户</span>' :
@@ -65,7 +73,7 @@ var vm = new Vue({
             userName: null,
             phone: null,
             wxUname: null,
-            userType: null
+            userType: ""
         },
 		showList: true,
 		showSaveOrUpdate: false,

@@ -58,16 +58,23 @@ public class ProjectController {
         Integer StartTimeInt = startTime.intValue();
         Float f = (startTime-StartTimeInt)*100;
         Integer StartTimeMinInt = f.intValue();
+        if (StartTimeMinInt == 0) {
+            project.setDateMinStart(StartTimeMinInt.toString()+"0");
+        }else {
             project.setDateMinStart(StartTimeMinInt.toString());
-            project.setDatetimeStart(StartTimeInt.toString());
+        }
+        project.setDatetimeStart(StartTimeInt.toString());
 
         Integer EndTimeInt = endTime.intValue();
         Float fe = (endTime-EndTimeInt)*100;
         Integer EndTimeMinInt = fe.intValue();
+
+        if (EndTimeMinInt == 0) {
+            project.setDateMinEnd(EndTimeMinInt.toString()+"0");
+        }else {
             project.setDateMinEnd(EndTimeMinInt.toString());
-            project.setDatetimeEnd(EndTimeInt.toString());
-
-
+        }
+        project.setDatetimeEnd(EndTimeInt.toString());
         return R.ok().put("project", project);
     }
 

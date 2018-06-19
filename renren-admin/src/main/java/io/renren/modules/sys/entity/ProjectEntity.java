@@ -1,5 +1,6 @@
 package io.renren.modules.sys.entity;
 
+import com.alibaba.fastjson.annotation.JSONType;
 import com.baomidou.mybatisplus.annotations.KeySequence;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;

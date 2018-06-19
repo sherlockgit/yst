@@ -5,7 +5,6 @@
 		<#include "/header.html">
             <link rel="stylesheet" href="${request.contextPath}/statics/plugins/layui2_3_0/css/layui.css" media="all">
             <script src="${request.contextPath}/statics/plugins/layui2_3_0/layui.js"></script>
-            <script src="${request.contextPath}/statics/plugins/layer/layer.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -15,8 +14,8 @@
                 <label class="form-inline">项目名称：<input type="text" v-model="q.proName" @keyup.enter="query" class="form-control" placeholder="项目名称"></label>
                 <label class="form-inline">项目类型：
                     <div class="form-group">
-                        <select  class="form-control" v-model="q.proType" @keyup.enter="query">
-                            <option></option>
+                        <select  class="form-control" v-model="q.proType" @keyup.enter="query" >
+                            <option value="" >全部</option>
                             <option value="0" >足疗</option>
                             <option value="1" >保健</option>
                             <option value="2" >纤体</option>
@@ -27,7 +26,7 @@
                 <label class="form-inline">项目状态：
                     <div class="form-group">
                         <select  class="form-control" v-model="q.proStatus" @keyup.enter="query">
-                            <option></option>
+                            <option value="">全部</option>
                             <option value="0" >新建</option>
                             <option value="1" >已上线</option>
                             <option value="2" >已下线</option>
@@ -155,13 +154,15 @@
             <div class="form-group">
                 <div class="col-sm-2 control-label">项目介绍</div>
                 <div class="col-sm-10">
-                    <textarea class="layui-textarea" id="LAY_demo1" v-model="project.proContent" style="display: none"></textarea>
+                    <textarea class="layui-textarea" id="LAY_demo1" v-model="project.proContent" style="display: none">
+                        sadasdsad
+                    </textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary site-demo-layedit" data-type="content"  value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="flush" value="返回"/>
             </div>
         </form>
     </div>
@@ -274,7 +275,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="flush" value="返回"/>
             </div>
         </form>
     </div>

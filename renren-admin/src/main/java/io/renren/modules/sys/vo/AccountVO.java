@@ -28,11 +28,25 @@ public class AccountVO {
      */
     private String userId;
     /**
-     * 累计充值
+     * 充值
      */
     @NotNull(message="充值金额不能为空",groups = {AddGroup.class, UpdateGroup.class})
     @Min(value = 1,message = "充值金额不能小于一元",groups = {AddGroup.class, UpdateGroup.class})
     @Digits(integer = 6,fraction = 2,message = "金额不能超过两位数")
+    private BigDecimal totalInNow;
+
+    public BigDecimal getTotalInNow() {
+        return totalInNow;
+    }
+
+    public void setTotalInNow(BigDecimal totalInNow) {
+        this.totalInNow = totalInNow;
+    }
+
+    /**
+     * 充值
+     */
+
     private BigDecimal totalIn;
     /**
      * 累计消费
@@ -74,6 +88,7 @@ public class AccountVO {
     /**
      * 说明
      */
+    @NotBlank(message="说明不能为空",groups = {AddGroup.class, UpdateGroup.class})
     private String memo;
 
     public String getMemo() {

@@ -5,8 +5,16 @@ $(function () {
         colModel: [			
 			{ label: 'accountId',hidden: true, name: 'accountId', index: 'ACCOUNT_ID', width: 50, key: true },
             { hidden: true, name: 'userId', index: "USER_ID", width: 0 },
-			{ label: '用户姓名', name: 'userName', index: 'USER_NAME', width: 80 },
-            { label: '手机号码', name: 'phone', index: 'PHONE', width: 80 },
+			{ label: '用户姓名', name: 'userName', index: 'USER_NAME', width: 80 ,formatter: function(value, options, row){
+                return value == null ?
+                    '<span>--</span>' :
+                    value;
+            }},
+            { label: '手机号码', name: 'phone', index: 'PHONE', width: 80 ,formatter: function(value, options, row){
+                return value == null ?
+                    '<span>--</span>' :
+                    value;
+            }},
             { label: '累计充值（元）', name: 'totalIn', index: 'TOTAL_IN', width: 80 },
 			{ label: '累计消费（元）', name: 'totalOut', index: 'TOTAL_OUT', width: 80 },
 			{ label: '账户余额（元）', name: 'balance', index: 'BALANCE', width: 80 },

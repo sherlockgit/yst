@@ -14,7 +14,7 @@ $(function () {
                     '<span>成功</span>';
             } },
             { label: '交易时间', name: 'createTime', index: 'CREATE_TIME', width: 80 },
-            { label: '说明', name: 'meno', index: 'MEMO', width: 80 }
+            { label: '说明', name: 'memo', index: 'MEMO', width: 80 }
         ],
 		viewrecords: true,
         height: 385,
@@ -49,7 +49,7 @@ var vm = new Vue({
         q:{
             userName: null,
             phone: null,
-            tranStatus: null
+            tranStatus: ""
         },
 		showList: true,
 		title: null,

@@ -81,15 +81,15 @@ public class AccountServiceImpl extends ServiceImpl<AccountDao, AccountEntity> i
         /*更新账户*/
         String accountId = accountVO.getAccountId();
         AccountEntity account = selectById(accountId);
-        account.setTotalIn(account.getTotalIn().add(accountVO.getTotalIn()));
-        account.setBalance(accountVO.getTotalIn().add(account.getBalance()));
+        account.setTotalIn(account.getTotalIn().add(accountVO.getTotalInNow()));
+        account.setBalance(accountVO.getTotalInNow().add(account.getBalance()));
         account.setUpdateTime(new Date());
 
         /*添加账户详情*/
         AccountItemEntity accountItemEntity = new AccountItemEntity();
         accountItemEntity.setItemId(UUIDUtils.getUUID());
         accountItemEntity.setUserId(account.getUserId());
-        accountItemEntity.setAmtIn(account.getTotalIn());
+        accountItemEntity.setAmtIn(accountVO.getTotalInNow());
         accountItemEntity.setBalance(account.getBalance());
         accountItemEntity.setTranStatus("1");
         accountItemEntity.setCreateTime(new Date());

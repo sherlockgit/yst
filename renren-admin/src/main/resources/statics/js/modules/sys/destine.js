@@ -94,7 +94,7 @@ var vm = new Vue({
         q:{
             uuame: null,
             phone: null,
-            proType: null,
+            proType: "",
             proName: null
         },
 		showList: true,
