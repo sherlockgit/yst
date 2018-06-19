@@ -13,9 +13,9 @@
                 <label class="form-inline">手机号码：<input type="text" v-model="q.phone" @keyup.enter="query" class="form-control" placeholder="手机号码"></label>
                 <label class="form-inline">账户余额 ><input type="text" v-model="q.balance" @keyup.enter="query" class="form-control" placeholder="账户余额"></label>
                 <a class="btn btn-default" @click="query">查询</a>
-                <!--<#if shiro.hasPermission("sys:userinfo:update")>-->
+                <#if shiro.hasPermission("sys:userinfo:update")>
                     <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;充值</a>
-                <!--</#if>-->
+                </#if>
             </div>
         </div>
         <table id="jqGrid"></table>
@@ -101,8 +101,9 @@
                 </div>
             </label>
             <a class="btn btn-default" @click="queryCount">查询</a>
+            <input type="button" class="btn btn-warning" @click="flush" value="返回"/>
         </div>
-        <table  id="jqGridCount"></table>
+        <table id="jqGridCount"></table>
         <div  id="jqGridCountPager"></div>
     </div>
 

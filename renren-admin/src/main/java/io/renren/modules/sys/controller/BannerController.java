@@ -61,7 +61,7 @@ public class BannerController {
      * 保存
      */
     @RequestMapping("/save")
-//    @RequiresPermissions("sys:banner:save")
+    @RequiresPermissions("sys:banner:save")
     public R save(@RequestBody BannerEntity banner){
         ValidatorUtils.validateEntity(banner, AddGroup.class);
         return bannerService.insertBanner(banner);
@@ -71,7 +71,7 @@ public class BannerController {
      * 修改
      */
     @RequestMapping("/update")
-//    @RequiresPermissions("sys:banner:update")
+    @RequiresPermissions("sys:banner:update")
     public R update(@RequestBody BannerEntity banner){
         ValidatorUtils.validateEntity(banner, UpdateGroup.class);
         return bannerService.updateBannner(banner);//全部更新

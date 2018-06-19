@@ -36,7 +36,7 @@ public class AccountItemController {
      * 列表
      */
     @RequestMapping("/list")
-//    @RequiresPermissions("sys:accountitem:list")
+    @RequiresPermissions("sys:accountitem:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = accountItemService.getAccountItemByUserIdPage(params);
 
@@ -49,7 +49,7 @@ public class AccountItemController {
      * @return
      */
     @RequestMapping("/listAll")
-//  @RequiresPermissions("sys:accountitem:list")
+    @RequiresPermissions("sys:accountitem:list")
     public R listAll(@RequestParam Map<String, Object> params) {
         return accountItemService.getAccountItemAll(params);
     }

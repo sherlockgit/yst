@@ -41,7 +41,7 @@ public class UserInfoController {
      * 列表
      */
     @RequestMapping("/list")
-//    @RequiresPermissions("sys:userinfo:list")
+    @RequiresPermissions("sys:userinfo:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = userInfoService.queryPage(params);
         return R.ok().put("page", page);
@@ -63,7 +63,7 @@ public class UserInfoController {
      * 保存
      */
     @RequestMapping("/save")
-//    @RequiresPermissions("sys:userinfo:save")
+    @RequiresPermissions("sys:userinfo:save")
     public R save(@RequestBody UserInfoEntity userInfo){
         ValidatorUtils.validateEntity(userInfo, AddGroup.class);
 
@@ -75,7 +75,7 @@ public class UserInfoController {
      * 修改
      */
     @RequestMapping("/update")
-//    @RequiresPermissions("sys:userinfo:update")
+    @RequiresPermissions("sys:userinfo:update")
     public R update(@RequestBody UserInfoEntity userInfo){
         ValidatorUtils.validateEntity(userInfo, UpdateGroup.class);
 

@@ -61,7 +61,7 @@ public class DestineController {
      * 保存
      */
     @RequestMapping("/save")
-//    @RequiresPermissions("sys:destine:save")
+    @RequiresPermissions("sys:destine:save")
     public R save(@RequestBody DestineEntity destine){
         ValidatorUtils.validateEntity(destine, AddGroup.class);
         return destineService.insertDestince(destine);

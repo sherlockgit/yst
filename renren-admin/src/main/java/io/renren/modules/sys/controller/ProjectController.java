@@ -50,7 +50,7 @@ public class ProjectController {
      * 信息
      */
     @RequestMapping("/info/{proId}")
-//    @RequiresPermissions("sys:project:info")
+    @RequiresPermissions("sys:project:info")
     public R info(@PathVariable("proId") String proId){
         ProjectEntity project = projectService.selectById(proId);
         Float startTime = project.getBeginTime();
@@ -82,7 +82,7 @@ public class ProjectController {
      * 保存
      */
     @RequestMapping("/save")
-//    @RequiresPermissions("sys:project:save")
+    @RequiresPermissions("sys:project:save")
     public R save(@RequestBody ProjectEntity project){
         ValidatorUtils.validateEntity(project, AddGroup.class);
 

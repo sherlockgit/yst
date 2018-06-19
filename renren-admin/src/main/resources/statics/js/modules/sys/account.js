@@ -31,7 +31,7 @@ $(function () {
         height: 385,
         rowNum: 10,
 		rowList : [10,30,50],
-        rownumbers: true, 
+        rownumbers: true,
         rownumWidth: 25, 
         autowidth:true,
         multiselect: true,
@@ -69,15 +69,16 @@ $(function () {
                     '<span>成功</span>';
             } },
             { label: '交易时间', name: 'createTime', index: 'CREATE_TIME', width: 80 },
-            { label: '说明', name: 'meno', index: 'MEMO', width: 80 }
+            { label: '说明', name: 'memo', index: 'MEMO', width: 80 }
         ],
         viewrecords: true,
         height: 385,
+        width: 1440,
         rowNum: 10,
         rowList : [10,30,50],
         rownumbers: true,
         rownumWidth: 25,
-        autowidth:true,
+        autowidth:false,
         multiselect: true,
         pager: "#jqGridCountPager",
         jsonReader : {
@@ -96,7 +97,7 @@ $(function () {
             $("#jqGridCount").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
         }
     });
-    $("#tableShow").show();
+    $("#tableShow").hide();
 });
 
 var vm = new Vue({
@@ -233,6 +234,9 @@ var vm = new Vue({
                 },
                 page:page
             }).trigger("reloadGrid");
+        },
+        flush: function (event) {
+            location.reload();
         }
 	}
 });

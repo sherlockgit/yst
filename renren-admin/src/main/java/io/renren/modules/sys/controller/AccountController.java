@@ -38,7 +38,7 @@ public class AccountController {
      * 列表
      */
     @RequestMapping("/list")
-//    @RequiresPermissions("sys:account:list")
+    @RequiresPermissions("sys:account:list")
     public R list(@RequestParam Map<String, Object> params){
         return accountService.getAccountInfoList(params);
     }
@@ -48,7 +48,7 @@ public class AccountController {
      * 信息
      */
     @RequestMapping("/info/{accountId}")
-//    @RequiresPermissions("sys:account:info")
+    @RequiresPermissions("sys:account:info")
     public R info(@PathVariable("accountId") String accountId){
 
         return accountService.getAccountDetail(accountId);
@@ -69,7 +69,7 @@ public class AccountController {
      * 修改
      */
     @RequestMapping("/update")
-//    @RequiresPermissions("sys:account:update")
+    @RequiresPermissions("sys:account:update")
     public R update(@RequestBody AccountVO accountVO){
         ValidatorUtils.validateEntity(accountVO, UpdateGroup.class);
 
